@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kopenhaga 2026 · Kelionės planas</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>
+  :root{
+    --accent: #c8102e;
+    --accent-dark: #8f0b20;
+    --ink: #1b1b1f;
+    --paper: #fffaf7;
+    --card: #ffffff;
+    --muted: #6b6b73;
+    --line: #ece3df;
+    --day1: #e6194B;
+    --day2: #3cb44b;
+    --day3: #4363d8;
+    --day4: #f58231;
+    font-size: 16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height:1.5;
+  }
+  header.hero{
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color:#fff;
+    padding: 2.2rem 1.2rem 1.8rem;
+    text-align:center;
+  }
+  header.hero h1{
+    margin:0 0 .3rem;
+    font-size: 1.9rem;
+    letter-spacing: .02em;
+  }
+  header.hero p{
+    margin:.2rem 0;
+    opacity:.95;
+    font-size: .98rem;
+  }
+  .wrap{
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 1.1rem 1rem 3rem;
+  }
+  .intro{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    margin: -1.4rem 0 1.6rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    position:relative;
+  }
+  .intro p{margin:.4rem 0;}
+  #map{
+    height: 380px;
+    border-radius: 14px;
+    margin-bottom: 1.8rem;
+    border: 1px solid var(--line);
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.6rem;
+    margin: -1.2rem 0 1.8rem;
+    font-size:.85rem;
+  }
+  .legend span{
+    display:inline-flex;
+    align-items:center;
+    gap:.35rem;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:.25rem .7rem;
+  }
+  .legend i{
+    width:10px;height:10px;border-radius:50%;display:inline-block;
+  }
+  h2.day-title{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    font-size: 1.25rem;
+    margin: 2rem 0 .9rem;
+    padding-bottom:.4rem;
+    border-bottom: 3px solid var(--dcolor, var(--accent));
+  }
+  h2.day-title .dot{
+    width:14px;height:14px;border-radius:50%;
+    background: var(--dcolor, var(--accent));
+    flex-shrink:0;
+  }
+  .overnight{
+    font-size:.82rem;
+    color: var(--muted);
+    font-weight:normal;
+    margin-left:auto;
+  }
+  .leg{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    font-size:.83rem;
+    color: var(--muted);
+    margin: .5rem 0 .5rem 1.1rem;
+    padding-left: .6rem;
+    border-left: 2px dashed var(--line);
+  }
+  .stop{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    margin-bottom: .9rem;
+  }
+  .stop-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:.6rem;
+    flex-wrap:wrap;
+  }
+  .stop-head h3{
+    margin:0;
+    font-size:1.05rem;
+  }
+  .stop-time{
+    font-size:.85rem;
+    color: var(--accent-dark);
+    font-weight:600;
+    white-space:nowrap;
+  }
+  .stop-notes{
+    margin:.5rem 0 0;
+    font-size:.92rem;
+    color:#3a3a40;
+  }
+  .stop a.gmaps{
+    display:inline-block;
+    margin-top:.5rem;
+    font-size:.8rem;
+    color: var(--accent);
+    text-decoration:none;
+    font-weight:600;
+  }
+  .stop a.gmaps:hover{text-decoration:underline;}
+  .spot-thumb{
+    display:block;
+    width:100%;
+    max-height:260px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-top:.7rem;
+    cursor: zoom-in;
+  }
+  .credit{
+    font-size:.72rem;
+    color: var(--muted);
+    margin-top:.3rem;
+  }
+  .credit a{color:var(--muted);}
+  .tips{
+    background:#fff4e8;
+    border:1px solid #f0d3ac;
+    border-radius:14px;
+    padding:1rem 1.1rem;
+    margin: 1.6rem 0;
+  }
+  .tips h3{margin:0 0 .5rem;font-size:1rem;}
+  .tips ul{margin:0;padding-left:1.2rem;}
+  .tips li{margin-bottom:.4rem;font-size:.92rem;}
+  .card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    margin: 1.6rem 0;
+  }
+  .card h2{margin-top:0;font-size:1.2rem;}
+  table.budget{
+    width:100%;
+    border-collapse: collapse;
+    font-size:.86rem;
+    margin-top:.6rem;
+  }
+  table.budget th, table.budget td{
+    padding:.5rem .4rem;
+    text-align:right;
+    border-bottom: 1px solid var(--line);
+  }
+  table.budget th:first-child, table.budget td:first-child{
+    text-align:left;
+  }
+  table.budget tr.total td{
+    font-weight:700;
+    border-top: 2px solid var(--ink);
+    border-bottom:none;
+  }
+  table.budget tr.pp td{
+    font-style: italic;
+    color: var(--muted);
+  }
+  .budget-note{
+    font-size:.82rem;
+    color: var(--muted);
+    margin-top:.7rem;
+  }
+  .practical dl{
+    display:grid;
+    grid-template-columns: auto 1fr;
+    gap:.4rem 1rem;
+    font-size:.92rem;
+    margin:0;
+  }
+  .practical dt{font-weight:600;color:var(--accent-dark);}
+  .practical dd{margin:0;}
+  footer{
+    text-align:center;
+    font-size:.75rem;
+    color: var(--muted);
+    padding: 1.5rem 1rem 2rem;
+  }
+  .lightbox{
+    display:none;
+    position:fixed;inset:0;
+    background: rgba(10,8,8,.92);
+    z-index: 1000;
+    align-items:center;
+    justify-content:center;
+    padding: 1.5rem;
+    cursor: zoom-out;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{
+    max-width:100%;
+    max-height:85vh;
+    border-radius:8px;
+  }
+  .lightbox figcaption{
+    color:#eee;
+    text-align:center;
+    font-size:.8rem;
+    margin-top:.6rem;
+  }
+  @media (min-width: 640px){
+    header.hero h1{font-size:2.3rem;}
+    .stop{padding:1.2rem 1.4rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Kopenhaga 🇩🇰</h1>
+  <p>2026 m. spalio 23–26 d. · 4 keliautojai · 3 naktys</p>
+  <p>Nyhavn, Amalienborgas, Christiania, Tivoli ir Deep Purple koncertas Royal Arena</p>
+</header>
+
+<div class="wrap">
+
+  <div class="intro">
+    <p><strong>Trumpai apie kelionę:</strong> keturios dienos Kopenhagoje, gyvenant apartamentuose Christianshavn rajone. Visos lankomos vietos telpa mieste, tad automobilis nereikalingas – judama pėsčiomis ir metro.</p>
+    <p><strong>1 diena</strong> – atvykimas, Nyhavn, Amalienborgas, Rosenborgo pilis. <strong>2 diena</strong> – Christiania, muziejai, Tivoli su Helovino puošyba. <strong>3 diena</strong> – kanalų ekskursija, Torvehallerne ir Deep Purple koncertas Royal Arena. <strong>4 diena</strong> – ramus atsisveikinimas ir skrydis namo.</p>
+  </div>
+
+  <div id="map"></div>
+  <div class="legend">
+    <span><i style="background:var(--day1)"></i>1 diena</span>
+    <span><i style="background:var(--day2)"></i>2 diena</span>
+    <span><i style="background:var(--day3)"></i>3 diena</span>
+    <span><i style="background:var(--day4)"></i>4 diena</span>
+  </div>
+
+  <div class="tips">
+    <h3>🧭 Naudinga žinoti</h3>
+    <ul>
+      <li>Visos vietos yra Kopenhagos centre, per 1–2 km viena nuo kitos – patogiausia keliauti pėsčiomis arba metro M1/M2 linija.</li>
+      <li>Iš oro uosto (CPH) iki apartamentų Christianshavn rajone metro M2 linija užtrunka apie 20 min. – stotelė yra tiesiai terminale.</li>
+      <li>4-ą dieną atvykus į oro uostą 13:00 val. (skrydis 15:15) liks apie 2 val. 15 min. – ramiai užteks bagažo registracijai ir saugumo patikrai.</li>
+      <li>Į Royal Arena koncertą važiuokite metro tiesiai iki Ørestad stotelės; grįžtant po koncerto patariama eiti link Vestamager stotelės, kur paprastai mažiau žmonių.</li>
+    </ul>
+  </div>
+
+  <!-- DAY 1 -->
+  <h2 class="day-title" style="--dcolor:var(--day1)"><span class="dot"></span>1 diena – Atvykimas ir Kopenhagos klasika <span class="overnight">nakvynė: Christianshavn</span></h2>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Kopenhagos oro uostas (CPH)</h3><span class="stop-time">09:40–10:15</span></div>
+    <p class="stop-notes">Nusileidus bagažo atsiėmimas ir pasų kontrolė nereikalinga (Šengeno erdvė). Į miestą – metro M2 linija, stotelė tiesiai terminale.</p>
+    <img class="spot-thumb" src="images/kopenhagos-oro-uostas-cph-b842c642.jpg" alt="Kopenhagos oro uostas" loading="lazy">
+    <div class="credit">Nuotr.: kallerna · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6181,12.6561" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚇 8 km · ~19 min · centro gatvėmis (metro M2 linija)</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Apartamentai Saint-Nice (Christianshavn)</h3><span class="stop-time">10:35–11:00</span></div>
+    <p class="stop-notes">Palikite lagaminus – kambariai gali būti dar neparuošti prieš 15:00, bet daiktus priimti leidžiama iš anksto. Christianshavn metro stotelė – 3 min pėsčiomis, patogu ir vėliau grįžtant iš koncerto.</p>
+    <img class="spot-thumb" src="images/apartamentai-saint-nice-christianshavn-bad75f5a.jpg" alt="Christianshavn apartamentai" loading="lazy">
+    <div class="credit">Nuotr.: Arild Vågen · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Christianshavns_F%C3%A6rgecafe,_October_2017.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6733,12.5936" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 2 km · ~3 min · trumpas šuolis per centrą</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Nyhavn kanalas</h3><span class="stop-time">11:20–11:40</span></div>
+    <p class="stop-notes">Spalvoti namukai ir senoviniai buriniai laivai – klasikinė Kopenhagos nuotrauka. Geriausia šviesa ryte, kol dar nėra minios.</p>
+    <img class="spot-thumb" src="images/nyhavn-kanalas-5db0a03b.jpg" alt="Nyhavn kanalas" loading="lazy">
+    <div class="credit">Nuotr.: Dietmar Rabich · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Kopenhagen_(DK),_Nyhavn_--_2017_--_1711.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6795,12.5878" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 2 km · ~5 min · asfaltuotos gatvės</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Amalienborgo pilis (sargybos keitimasis)</h3><span class="stop-time">11:55–12:40</span></div>
+    <p class="stop-notes">Sargybos keitimasis vyksta apie 12:00 – atėję truputį anksčiau užimsite gerą vietą prie aikštės. Įėjimas į kiemą nemokamas.</p>
+    <img class="spot-thumb" src="images/amalienborgo-pilis-sargybos-keitimasis-c22d0a28.jpg" alt="Amalienborgo pilis" loading="lazy">
+    <div class="credit">Nuotr.: Jebulon · CC0 · <a href="https://commons.wikimedia.org/wiki/File:Two_of_Kongelige_livgarde_Amalienborg_Copenhagen_Denmark.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6840,12.5933" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 gretimai · ~1 min pėsčiomis</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Ida Davidsen (pietūs)</h3><span class="stop-time">13:00–14:00</span></div>
+    <p class="stop-notes">Garsus smėrrebrėdo restoranas, žinomas nuo 1888 m. – paklauskite dienos pasiūlymų, dažnai pigiau nei meniu kaina.</p>
+    <img class="spot-thumb" src="images/ida-davidsen-piet-s-f56cd9d9.jpg" alt="Ida Davidsen restoranas" loading="lazy">
+    <div class="credit">Nuotr.: User:Nillerdk · CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/wiki/File:Restaurant_ida_davidsen_udefra_1.JPG" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6841,12.5921" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 2 km · ~4 min · trumpas šuolis per centrą</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Rosenborgo pilis ir Karaliaus sodas</h3><span class="stop-time">14:20–16:00</span></div>
+    <p class="stop-notes">Viduje – karūnos brangenybės, lauke – gražus parkas pasivaikščioti. Jei lyja, laiką galima praleisti vien pilyje.</p>
+    <img class="spot-thumb" src="images/rosenborgo-pilis-ir-karaliaus-sodas-5e6e52be.jpg" alt="Rosenborgo pilis" loading="lazy">
+    <div class="credit">Nuotr.: Jakub Hałun · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Copenhagen,_view_from_Rundet%C3%A5rn_with_Rosenborg_Castle,_20220617_1004_6716.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6857,12.5776" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 1 km · ~2 min · trumpas šuolis</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Torvehallerne prekyvietė</h3><span class="stop-time">16:15–17:15</span></div>
+    <p class="stop-notes">Uždara prekyvietė su vietos gėrybėmis, sūriais, kava ir kepiniais – gera vieta užkandžiams arba dienos pabaigos kavai.</p>
+    <img class="spot-thumb" src="images/torvehallerne-prekyviet-56f62a78.jpg" alt="Torvehallerne prekyvietė" loading="lazy">
+    <div class="credit">Nuotr.: Jorge Franganillo · CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_Torvehallerne_(30267894558).jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6837,12.5684" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <!-- DAY 2 -->
+  <h2 class="day-title" style="--dcolor:var(--day2)"><span class="dot"></span>2 diena – Christiania, muziejai ir Tivoli <span class="overnight">nakvynė: Christianshavn</span></h2>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Laisvasis miestas Christiania</h3><span class="stop-time">09:15–10:15</span></div>
+    <p class="stop-notes">Alternatyvaus gyvenimo būdo kvartalas su gatvės menu ir dirbtuvėmis – geriausia lankytis ryte, kol rami atmosfera. Nuotraukas darykite ne Pusher Street ruože – vietiniai to nemėgsta.</p>
+    <img class="spot-thumb" src="images/laisvasis-miestas-christiania-7cff3b94.jpg" alt="Christiania" loading="lazy">
+    <div class="credit">Nuotr.: Neptuul · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Christiania_in.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6738,12.5983" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 2 km · ~5 min · asfaltuotos gatvės</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Ny Carlsberg Glyptotek</h3><span class="stop-time">10:40–12:45</span></div>
+    <p class="stop-notes">Puiki vieta lietingam orui – stiklinis žieminis sodas su palmėmis ir senovės meno kolekcija. Neskubėkite prie skulptūrų salės po stogu.</p>
+    <img class="spot-thumb" src="images/ny-carlsberg-glyptotek-e02dedee.jpg" alt="Ny Carlsberg Glyptotek" loading="lazy">
+    <div class="credit">Nuotr.: Richard Mortel · CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:Alexander_the_Great,_from_Alexandria,_Egypt,_3rd_cent._BCE,_Ny_Carlsberg_Glyptotek,_Copenhagen_(5)_(36375553176).jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6735,12.5717" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 gretimai · ~1 min pėsčiomis</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Slotskælderen hos Gitte Kik (pietūs)</h3><span class="stop-time">13:00–14:00</span></div>
+    <p class="stop-notes">Tradicinis, jaukus smėrrebrėdo restoranėlis netoli Christiansborg – populiarus tarp vietinių, todėl verta atvykti tiksliai pietų metu.</p>
+    <img class="spot-thumb" src="images/slotsk-lderen-hos-gitte-kik-piet-s-53bfc874.jpg" alt="Slotskælderen hos Gitte Kik" loading="lazy">
+    <div class="credit">Nuotr.: Moahim · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:2018_-_Christiansborg_from_the_Marble_Bridge.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6761,12.5764" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 1 km · ~2 min · trumpas šuolis</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Danijos nacionalinis muziejus</h3><span class="stop-time">14:10–16:00</span></div>
+    <p class="stop-notes">Nemokamas įėjimas – vikingų salė ir bronzos amžiaus „Saulės vežimas“ verti dėmesio. Gerai tinka lietingam popiečiui.</p>
+    <img class="spot-thumb" src="images/danijos-nacionalinis-muziejus-cccc74d2.jpg" alt="Danijos nacionalinis muziejus" loading="lazy">
+    <div class="credit">Nuotr.: Dietmar Rabich · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Kopenhagen_(DK),_Nationalmuseum_--_2017_--_1473-9.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6739,12.5754" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 1 km · ~2 min · trumpas šuolis</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Tivoli parkas (Helovino sezonas)</h3><span class="stop-time">16:15–18:30</span></div>
+    <p class="stop-notes">Spalio mėnesį parkas papuoštas tūkstančiais moliūgų ir apšviestas – gražiausia atmosfera temstant (apie 17:30–18:00). Viduje daug uždarų kavinių, jei atšąla ar palyja.</p>
+    <img class="spot-thumb" src="images/tivoli-parkas-helovino-sezonas-ab04ef1b.jpg" alt="Tivoli parkas" loading="lazy">
+    <div class="credit">Nuotr.: Jakub Hałun · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Fountain_in_Tivoli_Gardens,_Copenhagen,_20220618_1307_7156.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6736,12.5681" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <!-- DAY 3 -->
+  <h2 class="day-title" style="--dcolor:var(--day3)"><span class="dot"></span>3 diena – Kanalai, Torvehallerne ir Deep Purple koncertas <span class="overnight">nakvynė: Christianshavn</span></h2>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Kanalų ekskursija laivu (Nyhavn prieplauka)</h3><span class="stop-time">09:30–10:25</span></div>
+    <p class="stop-notes">Žiemą plaukiojama uždaromis, šildomomis valtimis – malonu net vėsią rudens dieną. Miestą apžvelgsite iš vandens per ~55 min.</p>
+    <img class="spot-thumb" src="images/kanal-ekskursija-laivu-nyhavn-prieplauka-a962beea.jpg" alt="Kanalų ekskursija laivu" loading="lazy">
+    <div class="credit">Nuotr.: Olga Itenberg · CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:Nyhavn,_canal_tour_boats.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6798,12.5883" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 2 km · ~4 min · centro gatvėmis</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Torvehallerne (apsipirkimas)</h3><span class="stop-time">10:50–12:55</span></div>
+    <p class="stop-notes">Pasivaikščiokite tarp prekystalių, paragaukite vietinių sūrių ar kavos, kol artėja pietų metas.</p>
+    <img class="spot-thumb" src="images/torvehallerne-apsipirkimas-56f62a78.jpg" alt="Torvehallerne" loading="lazy">
+    <div class="credit">Nuotr.: Jorge Franganillo · CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_Torvehallerne_(30267894558).jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6837,12.5684" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Torvehallerne (pietūs)</h3><span class="stop-time">13:00–14:00</span></div>
+    <p class="stop-notes">Rinkitės bet kurį iš daugybės maisto stalelių – nuo šviežios žuvies iki naujosios danų virtuvės. Po pietų grįžkite pailsėti prieš vakaro koncertą, nes sutemsta jau apie 16:30.</p>
+    <img class="spot-thumb" src="images/torvehallerne-piet-s-56f62a78.jpg" alt="Torvehallerne pietūs" loading="lazy">
+    <div class="credit">Nuotr.: Jorge Franganillo · CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_Torvehallerne_(30267894558).jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6837,12.5684" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚇 8 km · ~13 min · pagrindiniu keliu link Ørestad (metro tiesiai iki Ørestad stotelės)</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Royal Arena – Deep Purple koncertas</h3><span class="stop-time">17:25–22:30</span></div>
+    <p class="stop-notes">Durys atsidaro 18:00. Važiuokite metro tiesiai iki Ørestad stotelės. Po koncerto grįžtant patariama eiti link Vestamager stotelės – ten paprastai mažiau žmonių nei prie Ørestad.</p>
+    <img class="spot-thumb" src="images/royal-arena-deep-purple-koncertas-e308d9d9.jpg" alt="Royal Arena" loading="lazy">
+    <div class="credit">Nuotr.: Jenny Andersson / News Øresund · CC BY 2.0 · <a href="https://commons.wikimedia.org/wiki/File:RoyalArena_20170811_N8B0024_(36517811566).jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6253,12.5722" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <!-- DAY 4 -->
+  <h2 class="day-title" style="--dcolor:var(--day4)"><span class="dot"></span>4 diena – Atsisveikinimas ir skrydis namo <span class="overnight">CPH → KUN 15:15</span></h2>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Café Wilder (pusryčiai)</h3><span class="stop-time">09:15–10:30</span></div>
+    <p class="stop-notes">Jauki vietinė kavinė Christianshavn rajone, mėgstama vietinių pusryčiams – gera vieta ramiai atsisveikinti su kvartalu.</p>
+    <img class="spot-thumb" src="images/caf-wilder-pusry-iai-ca1b8373.jpg" alt="Café Wilder" loading="lazy">
+    <div class="credit">Nuotr.: Marie Thérèse Hébert & Jean Robert Thibault · CC BY-SA 2.0 · <a href="https://commons.wikimedia.org/wiki/File:Danemark,_Copenhague,_le_Christianshavns_Faergecaf%C3%A9_longeant_le_Wilders_Kanal_o%C3%B9_d%C3%A9guster_un_bon_sm%C3%B6rrebr%C3%B6d_(32385017594).jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6734,12.5921" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 gretimai · ~1 min pėsčiomis</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Christianshavn kanalai (paskutinis pasivaikščiojimas)</h3><span class="stop-time">10:35–11:30</span></div>
+    <p class="stop-notes">Trumpas pasivaikščiojimas palei kanalus ir senus laivus prieš grįžtant susikrauti lagaminų. Rytą šviesa švelni – gerai tinka paskutinėms nuotraukoms.</p>
+    <img class="spot-thumb" src="images/christianshavn-kanalai-paskutinis-pasivaik-iojimas-bad75f5a.jpg" alt="Christianshavn kanalai" loading="lazy">
+    <div class="credit">Nuotr.: Arild Vågen · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Christianshavns_F%C3%A6rgecafe,_October_2017.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6739,12.5946" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚶 gretimai · ~1 min pėsčiomis</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Apartamentai Saint-Nice (bagažo pasiėmimas ir išsiregistravimas)</h3><span class="stop-time">11:35–12:20</span></div>
+    <p class="stop-notes">Pasiimkite lagaminus ir atsiskaitykite su apartamentais. Iš čia iki oro uosto metro M2 linija (Christianshavn stotelė – 3 min pėsčiomis) trunka apie 20 min.</p>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6733,12.5936" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <div class="leg">🚇 8 km · ~20 min · centro gatvėmis (metro M2 linija)</div>
+
+  <div class="stop">
+    <div class="stop-head"><h3>Kopenhagos oro uostas (CPH)</h3><span class="stop-time">13:00–15:15</span></div>
+    <p class="stop-notes">Atvykus 13:00 val. liks pakankamai laiko bagažo registracijai ir saugumo patikrai prieš 15:15 skrydį. Metro stotelė yra tiesiai terminale.</p>
+    <img class="spot-thumb" src="images/kopenhagos-oro-uostas-cph-b842c642.jpg" alt="Kopenhagos oro uostas" loading="lazy">
+    <div class="credit">Nuotr.: kallerna · CC BY-SA 4.0 · <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank" rel="noopener">šaltinis</a></div>
+    <a class="gmaps" href="https://www.google.com/maps/search/?api=1&query=55.6181,12.6561" target="_blank" rel="noopener">📍 Google Maps</a>
+  </div>
+
+  <!-- BUDGET -->
+  <div class="card">
+    <h2>💶 Biudžeto suvestinė</h2>
+    <p style="font-size:.88rem;color:var(--muted);margin-top:-.3rem;">4 keliautojai, 3 naktys. Automobilis nenuomojamas – judama pėsčiomis ir metro, todėl nuomos bei kuro išlaidų nėra.</p>
+    <table class="budget">
+      <thead>
+        <tr><th>Kategorija</th><th>Min</th><th>Tikėtina</th><th>Max</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>✈️ Skrydžiai (KUN↔CPH, 4 keleiviai)</td><td>€419</td><td>€620</td><td>€820</td></tr>
+        <tr><td>🏠 Nakvynė (3 naktys, Christianshavn)</td><td>€441</td><td>€441</td><td>€937</td></tr>
+        <tr><td>🍽️ Maistas (4 žm. × 4 d.)</td><td>€536</td><td>€960</td><td>€1 504</td></tr>
+        <tr><td>🎟️ Bilietai ir koncertas</td><td>€592</td><td>€844</td><td>€1 828</td></tr>
+        <tr class="total"><td>Viso</td><td>€1 988</td><td>€2 865</td><td>€5 089</td></tr>
+        <tr class="pp"><td>Vienam žmogui</td><td>~€497</td><td>~€716</td><td>~€1 272</td></tr>
+      </tbody>
+    </table>
+    <p class="budget-note">Skrydžio kaina (€419) yra už rankinį bagažą – jei reikės registruoto bagažo keturiems, priskaičiuokite papildomai. Didžiausią biudžeto neapibrėžtumą sudaro Deep Purple bilietai (nuo €76 iki €345 asmeniui priklausomai nuo vietos ir pardavėjo) – jei bilietai jau nupirkti, šią sumą galite išbraukti iš likusio biudžeto.</p>
+  </div>
+
+  <!-- PRACTICAL INFO -->
+  <div class="card practical">
+    <h2>ℹ️ Praktinė informacija</h2>
+    <dl>
+      <dt>Skrydis ten</dt><dd>KUN → CPH, 2026-10-23, 09:10–09:40</dd>
+      <dt>Skrydis atgal</dt><dd>CPH → KUN, 2026-10-26, 15:15–17:45</dd>
+      <dt>Apartamentai</dt><dd>Saint-Nice, Christianshavn – registracija galima nuo ~15:00, bagažą priima ir anksčiau</dd>
+      <dt>Išsiregistravimas</dt><dd>4-ą dieną iki 12:20</dd>
+      <dt>Automobilis</dt><dd>Nenuomojamas – visi persikėlimai pėsčiomis arba metro</dd>
+      <dt>Apartamentų kontaktas</dt><dd>________________</dd>
+      <dt>Grupės kontaktinis asmuo</dt><dd>________________</dd>
+    </dl>
+  </div>
+
+</div>
+
+<footer>
+  Kopenhaga · 2026-10-23–10-26 <!-- BUILD_TIME -->
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <figure style="margin:0;text-align:center;">
+    <img id="lightbox-img" src="" alt="">
+    <figcaption id="lightbox-caption"></figcaption>
+  </figure>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  const mapData = {
+    center: [55.6519, 12.6121],
+    zoom: 13,
+    bounds: [[55.6181, 12.5681], [55.6857, 12.6561]],
+    dayColors: { 1: "#e6194B", 2: "#3cb44b", 3: "#4363d8", 4: "#f58231" },
+    points: [
+      { geometry:{coordinates:[12.6561,55.6181]}, properties:{day:1,order:1,name:"Kopenhagos oro uostas (CPH)",color:"#e6194B",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6181,12.6561"} },
+      { geometry:{coordinates:[12.5936,55.6733]}, properties:{day:1,order:2,name:"Apartamentai Saint-Nice (Christianshavn)",color:"#e6194B",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6733,12.5936"} },
+      { geometry:{coordinates:[12.5878,55.6795]}, properties:{day:1,order:3,name:"Nyhavn kanalas",color:"#e6194B",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6795,12.5878"} },
+      { geometry:{coordinates:[12.5933,55.684]}, properties:{day:1,order:4,name:"Amalienborgo pilis",color:"#e6194B",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6840,12.5933"} },
+      { geometry:{coordinates:[12.5921,55.6841]}, properties:{day:1,order:5,name:"Ida Davidsen",color:"#e6194B",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6841,12.5921"} },
+      { geometry:{coordinates:[12.5776,55.6857]}, properties:{day:1,order:6,name:"Rosenborgo pilis",color:"#e6194B",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6857,12.5776"} },
+      { geometry:{coordinates:[12.5684,55.6837]}, properties:{day:1,order:7,name:"Torvehallerne",color:"#e6194B",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6837,12.5684"} },
+      { geometry:{coordinates:[12.5983,55.6738]}, properties:{day:2,order:1,name:"Christiania",color:"#3cb44b",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6738,12.5983"} },
+      { geometry:{coordinates:[12.5717,55.6735]}, properties:{day:2,order:2,name:"Ny Carlsberg Glyptotek",color:"#3cb44b",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6735,12.5717"} },
+      { geometry:{coordinates:[12.5764,55.6761]}, properties:{day:2,order:3,name:"Slotskælderen hos Gitte Kik",color:"#3cb44b",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6761,12.5764"} },
+      { geometry:{coordinates:[12.5754,55.6739]}, properties:{day:2,order:4,name:"Danijos nacionalinis muziejus",color:"#3cb44b",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6739,12.5754"} },
+      { geometry:{coordinates:[12.5681,55.6736]}, properties:{day:2,order:5,name:"Tivoli parkas",color:"#3cb44b",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6736,12.5681"} },
+      { geometry:{coordinates:[12.5883,55.6798]}, properties:{day:3,order:1,name:"Kanalų ekskursija (Nyhavn)",color:"#4363d8",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6798,12.5883"} },
+      { geometry:{coordinates:[12.5684,55.6837]}, properties:{day:3,order:2,name:"Torvehallerne",color:"#4363d8",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6837,12.5684"} },
+      { geometry:{coordinates:[12.5722,55.6253]}, properties:{day:3,order:4,name:"Royal Arena – Deep Purple",color:"#4363d8",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6253,12.5722"} },
+      { geometry:{coordinates:[12.5921,55.6734]}, properties:{day:4,order:1,name:"Café Wilder",color:"#f58231",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6734,12.5921"} },
+      { geometry:{coordinates:[12.5946,55.6739]}, properties:{day:4,order:2,name:"Christianshavn kanalai",color:"#f58231",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6739,12.5946"} },
+      { geometry:{coordinates:[12.6561,55.6181]}, properties:{day:4,order:3,name:"Kopenhagos oro uostas (CPH)",color:"#f58231",google_maps_url:"https://www.google.com/maps/search/?api=1&query=55.6181,12.6561"} }
+    ],
+    routes: [
+      { properties:{day:1,color:"#e6194B"}, geometry:{coordinates:[[12.6561,55.6181],[12.5936,55.6733],[12.5878,55.6795],[12.5933,55.684],[12.5921,55.6841],[12.5776,55.6857],[12.5684,55.6837]]} },
+      { properties:{day:2,color:"#3cb44b"}, geometry:{coordinates:[[12.5983,55.6738],[12.5717,55.6735],[12.5764,55.6761],[12.5754,55.6739],[12.5681,55.6736]]} },
+      { properties:{day:3,color:"#4363d8"}, geometry:{coordinates:[[12.5883,55.6798],[12.5684,55.6837],[12.5722,55.6253]]} },
+      { properties:{day:4,color:"#f58231"}, geometry:{coordinates:[[12.5921,55.6734],[12.5946,55.6739],[12.6561,55.6181]]} }
+    ]
+  };
+
+  const map = L.map('map');
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  mapData.routes.forEach(r => {
+    const latlngs = r.geometry.coordinates.map(c => [c[1], c[0]]);
+    L.polyline(latlngs, { color: r.properties.color, weight: 3, dashArray: "6,8" }).addTo(map);
+  });
+
+  mapData.points.forEach(p => {
+    const [lon, lat] = p.geometry.coordinates;
+    const marker = L.circleMarker([lat, lon], {
+      radius: 8,
+      color: '#fff',
+      weight: 2,
+      fillColor: p.properties.color,
+      fillOpacity: 1
+    }).addTo(map);
+    marker.bindPopup(
+      `<strong>${p.properties.day}.${p.properties.order} ${p.properties.name}</strong><br>` +
+      `<a href="${p.properties.google_maps_url}" target="_blank" rel="noopener">Google Maps</a>`
+    );
+  });
+
+  map.fitBounds(mapData.bounds, { padding: [20, 20] });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+
+  document.querySelectorAll('.spot-thumb').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightboxCaption.textContent = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  });
+</script>
+
+</body>
+</html>
