@@ -5,623 +5,817 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kopenhaga 2026 — kelionės planas</title>
 <style>
-  :root{
-    --accent:#c0392b;
-    --accent-dark:#8f2a1f;
-    --accent-light:#f4d8d4;
-    --bg:#faf7f2;
-    --card:#ffffff;
-    --text:#2b2320;
-    --muted:#6b6058;
-    --radius:14px;
-    --shadow:0 2px 10px rgba(0,0,0,.08);
+  :root {
+    --accent: #c8373d;
+    --accent-dark: #8f2127;
+    --accent-light: #f4d9da;
+    --teal: #0a5c6e;
+    --bg: #fafaf7;
+    --card: #ffffff;
+    --text: #232323;
+    --muted: #6b6b6b;
+    --border: #e4e0da;
+    --radius: 14px;
   }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    line-height:1.5;
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
   }
-  .wrap{max-width:900px;margin:0 auto;padding:0 16px;}
-  header.hero{
-    background:linear-gradient(135deg,var(--accent) 0%,var(--accent-dark) 100%);
-    color:#fff;
-    padding:36px 16px 28px;
-    text-align:center;
+  header.hero {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #fff;
+    padding: 2.2rem 1.2rem 1.8rem;
+    text-align: center;
   }
-  header.hero h1{margin:0 0 6px;font-size:1.9rem;}
-  header.hero p{margin:4px 0;opacity:.95;font-size:1rem;}
-  nav.quick{
-    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
-    padding:14px 16px;background:#fff;position:sticky;top:0;z-index:50;
-    box-shadow:var(--shadow);
+  header.hero h1 { margin: 0 0 .4rem; font-size: 1.7rem; }
+  header.hero p { margin: .2rem 0; opacity: .95; font-size: .98rem; }
+  main { max-width: 760px; margin: 0 auto; padding: 1rem 1rem 3rem; }
+  section { margin-top: 2.2rem; }
+  h2 {
+    font-size: 1.3rem;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: .3rem;
+    margin-bottom: 1rem;
+    color: var(--accent-dark);
   }
-  nav.quick a{
-    font-size:.82rem;color:var(--accent-dark);text-decoration:none;
-    border:1px solid var(--accent-light);padding:6px 10px;border-radius:20px;
-    white-space:nowrap;
+  h3 { font-size: 1.1rem; margin-bottom: .3rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
   }
-  nav.quick a:hover{background:var(--accent-light);}
-  section{padding:28px 16px;}
-  section h2{
-    font-size:1.4rem;margin:0 0 14px;color:var(--accent-dark);
-    border-bottom:2px solid var(--accent-light);padding-bottom:6px;
+  .day-header {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: 1rem;
   }
-  .day-section h2{margin-bottom:4px;}
-  .intro-card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-    padding:18px;margin-top:-18px;position:relative;
+  .day-title { font-size: 1.25rem; font-weight: 700; color: var(--accent-dark); }
+  .route-btn, .search-btn, .booking-btn {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff !important;
+    text-decoration: none;
+    padding: .55rem 1rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .92rem;
+    margin: .2rem .4rem .2rem 0;
   }
-  .weather-note{
-    font-size:.9rem;color:var(--muted);background:var(--accent-light);
-    border-radius:10px;padding:8px 12px;margin:8px 0 16px;display:inline-block;
+  .route-btn { background: var(--accent); }
+  .maps-link {
+    display: inline-block;
+    font-size: .85rem;
+    color: var(--teal);
+    text-decoration: none;
+    margin-top: .3rem;
+    font-weight: 600;
   }
-  .route-btn{
-    display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
-    padding:10px 16px;border-radius:30px;font-weight:600;font-size:.92rem;
-    margin:6px 6px 16px 0;box-shadow:var(--shadow);
+  .maps-link:hover { text-decoration: underline; }
+  .weather-note {
+    background: var(--accent-light);
+    border-radius: 10px;
+    padding: .5rem .8rem;
+    font-size: .9rem;
+    margin-bottom: .6rem;
   }
-  .route-btn:hover{background:var(--accent-dark);}
-  .route-btn.secondary{background:#3a6b63;}
-  .route-btn.secondary:hover{background:#2a4f49;}
-  .stop-card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-    padding:16px;margin-bottom:10px;
+  .plan-b-hint {
+    color: var(--accent-dark);
+    font-weight: 600;
+    font-size: .88rem;
   }
-  .stop-card h3{margin:0 0 4px;font-size:1.08rem;}
-  .stop-time{color:var(--accent-dark);font-weight:600;font-size:.88rem;}
-  .stop-notes{margin:8px 0 0;font-size:.94rem;}
-  .stop-photo{margin-top:10px;}
-  .stop-photo img.spot-thumb{width:100%;max-height:260px;object-fit:cover;border-radius:10px;cursor:zoom-in;display:block;}
-  .credit{font-size:.74rem;color:var(--muted);margin-top:4px;}
-  .credit a{color:var(--muted);}
-  .leg{
-    display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--muted);
-    padding:6px 16px 6px 20px;border-left:2px dotted var(--accent);margin-left:12px;
+  .stop {
+    border-left: 3px solid var(--accent);
+    padding: .4rem 0 .4rem 1rem;
+    margin-bottom: .9rem;
   }
-  .leg::before{content:"🚶";}
-  .leg.transit::before{content:"🚌";}
-  .leg.boat::before{content:"⛴";}
-  .eatery-tag,.bar-tag{
-    display:inline-block;background:#f1e6cf;color:#7a5a12;font-size:.78rem;
-    border-radius:8px;padding:4px 8px;margin-top:8px;
+  .stop-time { font-weight: 700; color: var(--accent-dark); font-size: .92rem; }
+  .stop-name { font-size: 1.05rem; font-weight: 700; margin: .1rem 0 .2rem; }
+  .stop-notes { font-size: .93rem; color: #3c3c3c; }
+  .leg {
+    font-size: .85rem;
+    color: var(--muted);
+    margin: .2rem 0 .6rem 1rem;
+    padding-left: .6rem;
+    border-left: 2px dotted var(--border);
   }
-  .bar-tag{background:#e6dcf1;color:#4b2e7a;}
-  details.plan-b{
-    margin-top:14px;background:#eef3f0;border-radius:var(--radius);padding:12px 16px;
+  .eatery-tag, .bar-tag {
+    display: inline-block;
+    background: #fff3e0;
+    border: 1px solid #f0d8b0;
+    border-radius: 8px;
+    padding: .4rem .6rem;
+    font-size: .88rem;
+    margin-top: .4rem;
   }
-  details.plan-b summary{cursor:pointer;font-weight:600;color:#2a4f49;}
-  .event-box{
-    background:#fff3e0;border-left:4px solid #e8973a;border-radius:8px;
-    padding:10px 14px;margin:10px 0;font-size:.92rem;
+  .bar-tag { background: #f0e6fa; border-color: #d9c2ef; }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: .5rem;
+    margin: .5rem 0;
   }
-  .accommodation-card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;
+  .spot-thumb {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
   }
-  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
-  .chip{background:var(--accent-light);color:var(--accent-dark);font-size:.78rem;padding:4px 10px;border-radius:14px;}
-  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0;}
-  .gallery img.spot-thumb{width:100%;height:80px;object-fit:cover;border-radius:8px;cursor:zoom-in;}
-  details > summary{cursor:pointer;color:var(--accent-dark);font-weight:600;margin-top:10px;}
-  table.budget-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:10px;}
-  table.budget-table th,table.budget-table td{border:1px solid #e4ddd4;padding:7px 8px;text-align:left;}
-  table.budget-table th{background:var(--accent-light);}
-  .food-grid,.card-grid{display:grid;grid-template-columns:1fr;gap:12px;}
-  @media(min-width:640px){
-    .food-grid,.card-grid{grid-template-columns:1fr 1fr;}
-    .gallery{grid-template-columns:repeat(5,1fr);}
+  .photo-credit {
+    font-size: .72rem;
+    color: var(--muted);
+    margin-top: .2rem;
   }
-  .food-card,.dish-card,.company-card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;
+  .photo-credit a { color: var(--muted); }
+  .single-photo { margin: .5rem 0; }
+  .single-photo img.spot-thumb { height: 160px; }
+  details.plan-b {
+    margin-top: 1rem;
+    background: #eef6f8;
+    border: 1px solid #cfe4e8;
+    border-radius: var(--radius);
+    padding: .7rem 1rem;
   }
-  .dish-card img{width:100%;height:140px;object-fit:cover;border-radius:10px;cursor:zoom-in;}
-  .tip-list{background:#fff8e6;border-radius:var(--radius);padding:14px 18px;}
-  .tip-list li{margin-bottom:8px;}
-  .practical-list li{margin-bottom:6px;}
-  .practical-card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;
+  details.plan-b summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--teal);
   }
-  footer{text-align:center;padding:24px 16px 40px;color:var(--muted);font-size:.8rem;}
-  #lightbox{
-    position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;
-    align-items:center;justify-content:center;z-index:999;padding:20px;
+  details.apt-desc {
+    margin-top: .6rem;
   }
-  #lightbox.open{display:flex;}
-  #lightbox img{max-width:100%;max-height:100%;border-radius:8px;}
-  #lightbox-close{
-    position:absolute;top:16px;right:20px;color:#fff;font-size:2rem;
-    cursor:pointer;background:none;border:none;
+  details.apt-desc summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--teal);
   }
-  .map-placeholder{min-height:340px;border-radius:var(--radius);overflow:hidden;background:#e4ddd4;}
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
+  .chip {
+    background: var(--accent-light);
+    color: var(--accent-dark);
+    border-radius: 999px;
+    padding: .25rem .7rem;
+    font-size: .82rem;
+  }
+  table.budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .92rem;
+  }
+  table.budget-table th, table.budget-table td {
+    text-align: left;
+    padding: .5rem .4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  table.budget-table th { color: var(--accent-dark); }
+  ul.plain { padding-left: 1.2rem; }
+  ul.plain li { margin-bottom: .35rem; }
+  .tips-box {
+    background: #fff8e1;
+    border: 1px solid #f0e0a0;
+    border-radius: var(--radius);
+    padding: .8rem 1rem;
+  }
+  .tips-box ul { margin: 0; padding-left: 1.2rem; }
+  .tips-box li { margin-bottom: .5rem; }
+  .dish-card { display: flex; gap: .8rem; flex-wrap: wrap; }
+  .dish-card img { width: 120px; height: 90px; object-fit: cover; border-radius: 8px; }
+  .dish-info { flex: 1; min-width: 180px; }
+  .forecast-day {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+    padding: .6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .forecast-day:last-child { border-bottom: none; }
+  .temp { font-weight: 700; color: var(--accent-dark); }
+  #lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.88);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  #lightbox-overlay.open { display: flex; }
+  #lightbox-overlay img {
+    max-width: 95vw;
+    max-height: 90vh;
+    border-radius: 6px;
+  }
+  #map { height: 420px; border-radius: var(--radius); overflow: hidden; }
+  .practical-card p { margin: .3rem 0; }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 2rem 1rem; }
+  a { color: var(--teal); }
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <h1>🇩🇰 Kopenhaga 2026</h1>
-  <p>2026-10-23 → 2026-10-26 · 4 keliautojai · Kaunas (KUN) ↔ Kopenhaga (CPH)</p>
-  <p>Kultūra, muziejai, smørrebrød ir Deep Purple koncertas — be automobilio, viskas pėsčiomis, viešuoju transportu ir vandeniu</p>
+  <h1>🇩🇰 Kopenhaga, 2026-10-23 → 2026-10-26</h1>
+  <p>4 keliautojai · 3 naktys · kultūra, menas ir vietinis maistas</p>
+  <p>Atvykimas ir išvykimas per Kopenhagos oro uostą (CPH), nakvynė Sydhavnen rajone — be automobilio, viskas pėsčiomis ir viešuoju transportu</p>
 </header>
 
-<nav class="quick">
-  <a href="#nakvyne">🏠 Nakvynė</a>
-  <a href="#diena-1">1 diena</a>
-  <a href="#diena-2">2 diena</a>
-  <a href="#diena-3">3 diena</a>
-  <a href="#diena-4">4 diena</a>
-  <a href="#zemelapis">🗺️ Žemėlapis</a>
-  <a href="#oras">☁️ Oras</a>
-  <a href="#maistas">🍽️ Maistas</a>
-  <a href="#biudzetas">💶 Biudžetas</a>
-  <a href="#info">ℹ️ Info</a>
-  <a href="#paimti">🎒 Ką pasiimti</a>
-</nav>
+<main>
 
-<div class="wrap">
-
-<section>
-  <div class="intro-card">
-    <p>Keturių dienų kelionė į Kopenhagą — istorinis senamiestis, karališkosios pilys, didieji muziejai, kanalų
-    vaizdai ir gatvės maistas, o šeštadienio vakarą — Deep Purple koncertas Royal Arenoje. Nakvojame bute su
-    kanalo vaizdu Sydhavnen rajone. Automobilis nenuomojamas — visą kelionę judame pėsčiomis, metro, autobusu, o
-    šeštadienio vakare iš Nyhavno iki Reffen plauksime vandens autobusu (Havnebus) po valandos pasiplaukiojimo
-    kanalais. Spalio pabaiga Kopenhagoje būna vėsi ir drėgna, todėl kiekvienai dienai paruoštas ir lietaus planas B.</p>
+<section id="intro">
+  <div class="card">
+    <p>Keturios dienos Kopenhagoje: senamiestis, karališkosios pilys, kanalai, meno muziejai ir gatvės maistas. Paskutinį vakarą — Deep Purple koncertas Royal Arenoje. Visos dienos suplanuotos pėsčiomis ir viešuoju transportu (metro, autobusas, kanalo laivelis), automobilio nuomos nėra.</p>
   </div>
 </section>
 
-<section id="nakvyne">
+<section id="accommodation">
   <h2>🏠 Nakvynė</h2>
-  <div class="accommodation-card">
+  <div class="card">
     <h3>Apartment with canal view</h3>
-    <p class="stop-notes">Kenny Drews Vej 31, 2 sal lej 9, Sydhavnen, 2450 Kopenhaga, Danija</p>
-    <p><strong>9,0/10</strong> · 50 atsiliepimų (Booking.com)</p>
-    <p class="stop-notes">Butas su kanalo vaizdu Sydhavnen rajone — naujesnė, ramesnė gyvenamoji dalis prie
-    vandens, nutolusi nuo senamiesčio. 1 miegamasis, svetainė, pilnai įrengta virtuvė, terasa ir balkonas į
-    vidinį kiemą. Visa nuoma trims naktims — 780 € (≈260 €/naktį).</p>
-    <div class="chips">
-      <span class="chip">Nemokama vieta automobiliui</span>
-      <span class="chip">Nemokamas belaidis internetas</span>
-      <span class="chip">Terasa</span>
-      <span class="chip">Ne rūkantiems</span>
+    <p><strong>Adresas:</strong> Kenny Drews Vej 37, 2450 København (Sydhavnen / Pietų uostas rajonas)</p>
+    <p><strong>Įvertinimas:</strong> 9,0/10 · 50 atsiliepimų (Booking.com)</p>
+    <p>Jaukus apartamentas su kanalo vaizdu Kopenhagos Sydhavnen rajone — vienas miegamasis, pilnai įrengta virtuvė, valgomasis ir terasa su vandens bei sodo vaizdu. Rajonas naujas ir ramus, bet kiek toliau nuo senamiesčio — skirkite papildomai 10–15 min kelionei viešuoju transportu iki lankytinų vietų.</p>
+    <p><a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kenny+Drews+Vej+37%2C+2450+K%C3%B8benhavn%2C+Denmark" target="_blank">📍 Google Maps</a></p>
+    <div class="photo-grid">
+      <div>
+        <img class="spot-thumb" src="images/stay-apartment-with-canal-view-1.jpg" alt="Apartment with canal view">
+      </div>
+      <div>
+        <img class="spot-thumb" src="images/stay-apartment-with-canal-view-2.jpg" alt="Apartment with canal view">
+      </div>
+      <div>
+        <img class="spot-thumb" src="images/stay-apartment-with-canal-view-3.jpg" alt="Apartment with canal view">
+      </div>
+      <div>
+        <img class="spot-thumb" src="images/stay-apartment-with-canal-view-4.jpg" alt="Apartment with canal view">
+      </div>
+      <div>
+        <img class="spot-thumb" src="images/stay-apartment-with-canal-view-5.jpg" alt="Apartment with canal view">
+      </div>
     </div>
+    <p class="photo-credit">Nuotraukos: Booking.com</p>
     <p>
-      <a class="route-btn" href="https://www.booking.com/hotel/dk/apartment-with-canal-view-kobenhavn.lt.html" target="_blank">Booking.com</a>
-      <a class="route-btn secondary" href="https://www.booking.com/searchresults.html?ss=Apartment+with+canal+view%2C+Kopenhaga&checkin=2026-10-23&checkout=2026-10-26&group_adults=4&group_children=0&no_rooms=1" target="_blank">🔎 Booking.com: 2026-10-23–2026-10-26, 4 žm.</a>
+      <a class="booking-btn" href="https://www.booking.com/hotel/dk/apartment-with-canal-view-kobenhavn.lt.html" target="_blank">Booking.com</a>
+      <a class="search-btn" href="https://www.booking.com/searchresults.html?ss=Apartment+with+canal+view%2C+Kopenhaga&amp;checkin=2026-10-23&amp;checkout=2026-10-26&amp;group_adults=4&amp;group_children=0&amp;no_rooms=1" target="_blank">🔎 Booking.com: 2026-10-23–2026-10-26, 4 žm.</a>
     </p>
-    <details>
-      <summary>Apartamentų aprašymas</summary>
-      <p>Apartamentai su kanalo vaizdu įsikūrę Kopenhagoje, Sidlandijos (Zealand) regione, ir turi terasą. Iš
-      apartamentų atsiveria ežero ir sodo vaizdas, veikia nemokamas belaidis internetas. Būstas nerūkantiems,
-      nutolęs 2,8 km nuo Bella Center. Erdviame bute yra 1 miegamasis, 1 vonios kambarys, patalynė, rankšluosčiai,
-      plokščias televizorius, valgomasis, pilnai įrengta virtuvė ir terasa su vaizdu į jūrą. Nuo balkono, kuriame
-      yra lauko baldai, atsiveria vidinio kiemo vaizdas. Iki Kopenhagos centrinės geležinkelio stoties — 3,9 km,
-      iki Ny Carlsberg Glyptotek meno galerijos — 4,2 km. Kopenhagos oro uostas yra už 11 km nuo apartamentų.</p>
-    </details>
-    <div class="gallery">
-      <img class="spot-thumb" src="images/stay-apartment-with-canal-view-1.jpg" alt="Apartment with canal view">
-      <img class="spot-thumb" src="images/stay-apartment-with-canal-view-2.jpg" alt="Apartment with canal view">
-      <img class="spot-thumb" src="images/stay-apartment-with-canal-view-3.jpg" alt="Apartment with canal view">
-      <img class="spot-thumb" src="images/stay-apartment-with-canal-view-4.jpg" alt="Apartment with canal view">
-      <img class="spot-thumb" src="images/stay-apartment-with-canal-view-5.jpg" alt="Apartment with canal view">
-    </div>
-    <p class="credit">Nuotraukos: Booking.com</p>
   </div>
 </section>
 
-<div class="tip-list wrap" style="margin:0 16px 10px;">
-  <strong>Praktiniai patarimai šiai kelionei:</strong>
-  <ul>
-    <li>Nakvynės vieta yra Sydhavnen rajone, toliau nuo senamiesčio ir Christianshavn nei įprastos nakvynės -- kelias iki visų lankytinų vietų ir oro uosto yra patogus bei asfaltuotas, bet skirkite papildomai 10-15 minučių kelionei autobusu ar traukiniu.</li>
-    <li>Iš oro uosto į apartamentus Sydhavnen rajone kelias driekiasi per greitkelį -- patogiausia taksi arba autobusu/traukiniu su persėdimu, nes tiesioginio metro iki šio rajono nėra.</li>
-    <li>Po šeštadienio Deep Purple koncerto Royal Arenoje (baigiasi apie 22:30) grįžtant į Sydhavnen, iš anksto pasitikrinkite vakarinio S-traukinio ar autobuso tvarkaraštį.</li>
-    <li>Po pasiplaukiojimo kanalais šeštadienį patogiausia iki Reffen plaukti Havnebusu tiesiai nuo Nyhavno prieplaukos -- tas pats bilietas kaip autobusui ar metro.</li>
-    <li>Paskutinę dieną pirmadienį dauguma Kopenhagos muziejų (tarp jų Nationalmuseet) yra uždaryti -- ryto pasivaikščiojimui pasirinktas Frederiksberg Have parkas, kuris visada atviras ir nemokamas.</li>
-    <li>Paskutinę dieną į oro uostą atvykstama apie 2,5 val. prieš skrydį -- registracijai, bagažo pridavimui ir pietums laiko pakanka.</li>
-    <li>Naktį iš šeštadienio į sekmadienį (spalio 25-osios naktis) laikrodžiai pasukami į žiemos laiką -- naktis bus viena valanda ilgesnė, patikrinkite, ar telefonas atsinaujina automatiškai.</li>
-  </ul>
-</div>
+<!-- DAY 1 -->
+<section id="day1">
+  <div class="day-header">
+    <div class="day-title">1 diena · 2026-10-23, penktadienis — Atvykimas ir Christianshavn</div>
+    <a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=Copenhagen+Airport,+Kastrup,+Denmark&destination=Torvehallerne,+Copenhagen,+Denmark&travelmode=driving&waypoints=Kenny+Drews+Vej+37,+2450+K%C3%B8benhavn,+Denmark|Vor+Frelsers+Kirke,+Copenhagen,+Denmark|Caf%C3%A9+Wilder,+Copenhagen,+Denmark|Nyhavn,+Copenhagen,+Denmark|Rundet%C3%A5rn,+Copenhagen,+Denmark" target="_blank">🧭 Dienos maršrutas Google Maps</a>
+    <div class="weather-note">🌦 Orai: dulksna, 8–12°C, lietaus tikimybė 59%, vėjas iki 20 km/h. Lietaus striukė praverstų visą dieną.</div>
+  </div>
 
-<!-- ==================== DIENA 1 ==================== -->
-<section id="diena-1" class="day-section">
-  <h2>1 diena · 2026-10-23, penktadienis</h2>
-  <p><strong>Atvykimas ir Christianshavn</strong></p>
-  <p class="weather-note">🌦 Dulksna, 8,8–11,9°C, lietaus tikimybė 59%, vėjas iki 25,6 km/h — šią dieną gali labiau tikti Planas B.</p>
-  <p><a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=55.618000,12.647600&destination=55.683800,12.568300&travelmode=driving&waypoints=55.656000,12.547500|55.672500,12.593900|55.671900,12.592000|55.679900,12.590000|55.680800,12.577500" target="_blank">🧭 Dienos maršrutas Google Maps</a></p>
-
-  <div class="stop-card">
-    <h3>Kopenhagos oro uostas (CPH)</h3>
-    <p class="stop-time">09:40 – 10:10</p>
-    <p class="stop-notes">Atvykimas iš Kauno. Atsiėmę bagažą, pasukite pas M2 metro ženklus – tiesioginis traukinys į miesto centrą. Bilietą pirkite „Rejsebillet“ programėlėje arba automate stotyje.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">09:40–10:10</div>
+    <div class="stop-name">Kopenhagos oro uostas (CPH)</div>
+    <div class="stop-notes">Atvykimas iš Kauno. Atsiėmę bagažą, pasukite pas M2 metro ženklus – tiesioginis traukinys į miesto centrą. Bilietą pirkite „Rejsebillet" programėlėje arba automate stotyje.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/kopenhagos-oro-uostas-cph-b842c642.jpg" alt="Kopenhagos oro uostas (CPH)">
-      <p class="credit">Nuotrauka: kallerna, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: kallerna, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg transit">Apie 30 min. kelione metro (M2 iš oro uosto į centrą, persėdimas) iki Sydhavnen</div>
+  <div class="leg">🚗 10 km, ~14 min – asfaltuota kelio atšaka iš oro uosto per greitkelį į Sydhavnen rajoną</div>
 
-  <div class="stop-card">
-    <h3>Apartamentai su kanalo vaizdu – įsiregistravimas (Sydhavnen)</h3>
-    <p class="stop-time">10:40 – 11:00</p>
-    <p class="stop-notes">Naujas apartamentas su kanalo vaizdu Sydhavnen rajone (Kenny Drews Vej 31, 2 a., 9 būst., 2450 Kopenhaga) – visa nuoma trims naktims 780 €. Automobilio šioje kelionėje nenuomojame – visur keliausime pėsčiomis arba viešuoju transportu. Nuo apartamentų iki M4 metro stotelės (Sluseholmen) ~7 min pėsčiomis. Įsiregistravimas dažniausiai nuo 15:00 – jei atvykstate anksčiau, galima tik palikti bagažą (iš anksto susiderinti su šeimininku) ir leistis pasivaikščioti be jų.</p>
-    <div class="stop-photo">
-      <img class="spot-thumb" src="images/apartamentai-su-kanalo-vaizdu-siregistravimas-sydhavnen-a7d66184.jpg" alt="Apartamentai su kanalo vaizdu">
-      <p class="credit">Nuotrauka: Ramblersen2, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:V._A._Borgens_Vej_02.jpg" target="_blank">šaltinis</a></p>
+  <div class="stop">
+    <div class="stop-time">10:40–11:05</div>
+    <div class="stop-name">Apartamentai su kanalo vaizdu – įsiregistravimas</div>
+    <div class="stop-notes">Visa nuoma trims naktims – 780 €. Automobilio šioje kelionėje nenuomojame – visur keliausime pėsčiomis arba viešuoju transportu. Įsiregistravimas dažniausiai nuo 15:00 – jei atvykstate anksčiau, susiderinkite su šeimininku dėl bagažo palikimo.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kenny%20Drews%20Vej%2037%2C%202450%20K%C3%B8benhavn%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
+      <img class="spot-thumb" src="images/apartamentai-su-kanalo-vaizdu-siregistravimas-sydhavnen-a7d66184.jpg" alt="Apartamentai – įsiregistravimas">
+      <div class="photo-credit">Autorius: Ramblersen2, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:V._A._Borgens_Vej_02.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg transit">Apie 30 min. kelione metro (M4 iki centro, persėdimas į M1/M2 vieną stotelę) iki Christianshavn</div>
+  <div class="leg">🚶 5 km, ~8 min – asfaltuotos miesto gatvės iš Sydhavnen į Christianshavn</div>
 
-  <div class="stop-card">
-    <h3>Vor Frelsers Kirke (Išganytojo bažnyčia)</h3>
-    <p class="stop-time">11:35 – 12:35</p>
-    <p class="stop-notes">Žymūs išoriniai sraigtiniai laiptai ant bokšto – vaizdas į visą Christianshavn ir senamiestį. Bilietas į bokštą ~70 DKK, atvira 09:00–20:00. Bokštas uždaromas vėjuotu ar lietingu oru – tokiu atveju užeikite tik į pačią bažnyčią (nemokama, 11:00–15:30).</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">11:30–12:30</div>
+    <div class="stop-name">Vor Frelsers Kirke (Išganytojo bažnyčia)</div>
+    <div class="stop-notes">Žymūs išoriniai sraigtiniai laiptai ant bokšto – vaizdas į visą Christianshavn ir senamiestį. Bilietas į bokštą ~70 DKK, atvira 09:00–20:00. Bokštas uždaromas vėjuotu ar lietingu oru – tokiu atveju užeikite tik į pačią bažnyčią (nemokama, 11:00–15:30).</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Vor%20Frelsers%20Kirke%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/vor-frelsers-kirke-i-ganytojo-ba-ny-ia-08f84cd1.jpg" alt="Vor Frelsers Kirke">
-      <p class="credit">Nuotrauka: Acediscovery, CC BY 4.0, <a href="https://commons.wikimedia.org/wiki/File:Church-of-Our-Saviour-Copenhagen.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Acediscovery, CC BY 4.0, <a href="https://commons.wikimedia.org/wiki/File:Church-of-Our-Saviour-Copenhagen.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">Tas pats Christianshavn kvartalas, kelios minutės pėsčiomis</div>
+  <div class="leg">🚶 1 km, ~2 min – tas pats kvartalas Christianshavn</div>
 
-  <div class="stop-card">
-    <h3>Café Wilder</h3>
-    <p class="stop-time">13:00 – 14:00</p>
-    <p class="stop-notes">Pietūs jaukioje Christianshavn kavinėje su prancūzišku-danišku bistro meniu – geras pirmas įspūdis apie vietinę virtuvę.</p>
-    <span class="eatery-tag">🍽️ Pietūs: ~20 €/žm. — prancūziškai-daniška bistro</span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">13:00–14:00</div>
+    <div class="stop-name">Pietūs: Café Wilder</div>
+    <div class="stop-notes">Jaukus Christianshavn rajono bistro su prancūzišku-daniškos virtuvės meniu – mėgstamas vietinių, geras pirmas įspūdis apie Danijos gastronomiją. ~25 €/asm.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Caf%C3%A9%20Wilder%2C%20Wildersgade%2056%2C%201408%20K%C3%B8benhavn" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/caf-wilder-ca1b8373.jpg" alt="Café Wilder">
-      <p class="credit">Nuotrauka: Marie Thérèse Hébert & Jean Robert Thibault, CC BY-SA 2.0, <a href="https://commons.wikimedia.org/wiki/File:Danemark,_Copenhague,_le_Christianshavns_Faergecaf%C3%A9_longeant_le_Wilders_Kanal_o%C3%B9_d%C3%A9guster_un_bon_sm%C3%B6rrebr%C3%B6d_(32385017594).jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Marie Thérèse Hébert &amp; Jean Robert Thibault, CC BY-SA 2.0, <a href="https://commons.wikimedia.org/wiki/File:Danemark,_Copenhague,_le_Christianshavns_Faergecaf%C3%A9_longeant_le_Wilders_Kanal_o%C3%B9_d%C3%A9guster_un_bon_sm%C3%B6rrebr%C3%B6d_(32385017594).jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">~12 min pėsčiomis centru</div>
+  <div class="leg">🚶 1 km, ~3 min – trumpas žingsnis centre</div>
 
-  <div class="stop-card">
-    <h3>Nyhavn</h3>
-    <p class="stop-time">14:30 – 15:30</p>
-    <p class="stop-notes">Spalvingas kanalo krantas su senais laivais – pati žinomiausia Kopenhagos vieta. Saugokite daiktus, vieta turistinė ir gana žmonių pilna.</p>
-    <span class="bar-tag">🍸 Galima užsukti: Hviids Vinstue — seniausias nenutrūkstamai veikiantis baras Kopenhagoje (nuo 1723 m.), garsus gløgg ir akvavito pasirinkimu. <a href="https://www.google.com/maps/search/?api=1&query=Hviids%20Vinstue%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">14:30–15:30</div>
+    <div class="stop-name">Nyhavn</div>
+    <div class="stop-notes">Spalvingas kanalo krantas su senais laivais – pati žinomiausia Kopenhagos vieta. Saugokite daiktus, vieta turistinė ir gana žmonių pilna.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Nyhavn%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/nyhavn-5db0a03b.jpg" alt="Nyhavn">
-      <p class="credit">Nuotrauka: Dietmar Rabich, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Kopenhagen_(DK),_Nyhavn_--_2017_--_1711.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Dietmar Rabich, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Kopenhagen_(DK),_Nyhavn_--_2017_--_1711.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">~10 min pėsčiomis nuo Nyhavn</div>
+  <div class="leg">🚶 2 km, ~6 min – asfaltuotos senamiesčio gatvės</div>
 
-  <div class="stop-card">
-    <h3>Rundetårn (Apvalusis bokštas)</h3>
-    <p class="stop-time">15:45 – 16:45</p>
-    <p class="stop-notes">Seniausia veikianti observatorija Europoje – į viršų kyla ne laiptai, o sraigtinė rampa. Bilietas 60 DKK, atvira 10:00–18:00. Geras laikas pataikyti į saulėlydį senamiesčio panoramoje.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">15:45–16:45</div>
+    <div class="stop-name">Rundetårn (Apvalusis bokštas)</div>
+    <div class="stop-notes">Seniausia veikianti observatorija Europoje – į viršų kyla ne laiptai, o sraigtinė rampa. Bilietas 60 DKK, atvira 10:00–18:00. Geras laikas pataikyti į saulėlydį senamiesčio panoramoje.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Rundet%C3%A5rn%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/rundet-rn-apvalusis-bok-tas-b2fefc3d.jpg" alt="Rundetårn">
-      <p class="credit">Nuotrauka: Dietmar Rabich, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Kopenhagen_(DK),_Runder_Turm_--_2017_--_1633.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Dietmar Rabich, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Kopenhagen_(DK),_Runder_Turm_--_2017_--_1633.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">~9 min pėsčiomis nuo Rundetårn</div>
+  <div class="leg">🚶 3 km, ~6 min – asfaltuotos centro gatvės</div>
 
-  <div class="stop-card">
-    <h3>Torvehallerne maisto turgus</h3>
-    <p class="stop-time">17:00 – 18:45</p>
-    <p class="stop-notes">Geriausia miesto maisto turgavietė – paragaukite tradicinio smørrebrød prie „Hallernes Smørrebrød“ prekystalio. Penktadienį atvira iki 19:00.</p>
-    <span class="eatery-tag">🍽️ Hallernes Smørrebrød ~13 €/žm.</span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">17:00–18:45</div>
+    <div class="stop-name">Torvehallerne maisto turgus</div>
+    <div class="stop-notes">Geriausia miesto maisto turgavietė – paragaukite tradicinio smørrebrød prie „Hallernes Smørrebrød" prekystalio (~15 €/asm.). Penktadienį atvira iki 19:00.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Torvehallerne%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/torvehallerne-maisto-turgus-56f62a78.jpg" alt="Torvehallerne">
-      <p class="credit">Nuotrauka: Jorge Franganillo, CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_Torvehallerne_(30267894558).jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Jorge Franganillo, CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_Torvehallerne_(30267894558).jpg" target="_blank">šaltinis</a></div>
     </div>
+    <div class="eatery-tag">🍽 Hallernes Smørrebrød – seniausias ir labiausiai vertinamas smørrebrød prekystalis turguje. <a href="https://www.google.com/maps/search/?api=1&amp;query=Hallernes%20Sm%C3%B8rrebr%C3%B8d%2C%20Frederiksborggade%2021%2C%201360%20K%C3%B8benhavn%20K" target="_blank">📍 Google Maps</a></div>
   </div>
 
-  <p class="stop-notes">💡 Netoli apartamentų, jei norėsite vakarienės be tolimos kelionės: Teglværket (maisto erdvė su uosto vaizdu, ~16 €/žm.) — pora minučių pėsčiomis nuo Sydhavnen būsto.</p>
+  <div class="card" style="margin-top:1rem;">
+    <p><strong>🌙 Vakarienė šalia apartamentų:</strong> jei liko jėgų, čia pat prie Sydhavnen apartamentų veikia <strong>Palermo Pizzeria</strong> – pigi ir patogi vakarienė per kelias minutes pėsčiomis (~15 €/asm.). <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Palermo%20Pizzeria%2C%20Borgbjergsvej%2011%2C%202450%20K%C3%B8benhavn%20SV" target="_blank">📍 Google Maps</a></p>
+  </div>
 
   <details class="plan-b">
     <summary>🌧 Planas B (jei blogas oras)</summary>
-    <p><strong>Jautru orui:</strong> Vor Frelsers Kirke bokšto lauko sraigtiniai laiptai užsidaromi stipriame vėjyje ar lietuje, o Nyhavn pasivaikščiojimas vyksta visiškai lauke, palei atvirą kanalo krantinę – abu pakeisti vidaus objektais.</p>
-    <p><strong>Vidinis Christianshavn variantas su dizaino muziejumi</strong></p>
-    <ul>
-      <li>09:40–10:10 Kopenhagos oro uostas (CPH) — atvykimas, M2 metro į centrą.</li>
-      <li>10:40–11:05 Apartamentai, Sydhavnen — įsiregistravimas / bagažo palikimas.</li>
-      <li>11:30–12:30 Vor Frelsers Kirke (tik vidus, bokštas uždarytas) — barokinis vidus, nemokama, 11:00–15:30.</li>
-      <li>13:00–14:00 Café Wilder — pietūs, nuo oro nepriklauso.</li>
-      <li>14:30–16:00 Designmuseum Danmark — ~25 min nuo Café Wilder metro ir pėsčiomis. Bilietas ~115 DKK, penktadienį 10:00–18:00.</li>
-      <li>16:20–17:00 Rundetårn — kyla sraigtine rampa viduje, ~15–20 min pėsčiomis. Bilietas 60 DKK.</li>
-      <li>17:15–18:45 Torvehallerne maisto turgus — smørrebrød, ~9 min pėsčiomis.</li>
-    </ul>
-    <p>Bendras vairavimo/kelionės laikas: ~39 min. Baigiasi toje pačioje vietoje kaip pagrindinis planas.</p>
-    <p><a class="route-btn secondary" href="https://www.google.com/maps/dir/?api=1&origin=55.618000,12.647600&destination=55.683800,12.568300&travelmode=driving&waypoints=55.656000,12.547500|55.672500,12.593900|55.671900,12.592000|55.686400,12.593400|55.680800,12.577500" target="_blank">🧭 Planas B maršrutas Google Maps</a></p>
-    <p><strong>Patarimas:</strong> Bokšto bilietą pirkite tik jei oras pagerės vietoje; bažnyčios vidus nemokamas. Designmuseum Danmark penktadienį dirba 10:00–18:00.</p>
+    <p><strong>Orui jautru:</strong> Nyhavn (kanalo krantinės pasivaikščiojimas lauke) ir Vor Frelsers Kirke bokštas (uždaromas stipriu vėju/lietumi) – likusi dienos dalis (bažnyčios vidus, kavinės, Rundetårn rampa, dengtas Torvehallerne turgus) orui nejautri.</p>
+    <p><strong>Christianshavn lietingą dieną – architektūra vietoj Nyhavno</strong></p>
+    <div class="stop">
+      <div class="stop-time">09:40–10:10</div>
+      <div class="stop-name">Kopenhagos oro uostas (CPH)</div>
+      <div class="stop-notes">Atvykimas iš Kauno. Pas M2 metro ženklus – tiesioginis traukinys į centrą.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">10:40–11:05</div>
+      <div class="stop-name">Apartamentai – įsiregistravimas</div>
+      <div class="stop-notes">Įsiregistravimas dažniausiai nuo 15:00 – anksčiau atvykus, susiderinti su šeimininku dėl bagažo palikimo.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kenny%20Drews%20Vej%2037%2C%202450%20K%C3%B8benhavn%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">11:30–12:30</div>
+      <div class="stop-name">Vor Frelsers Kirke (bažnyčios vidus)</div>
+      <div class="stop-notes">Vėjuotu/lietingu oru bokštas uždarytas – apsilankykite tik pačioje bažnyčioje (nemokama, 11:00–15:30), skirkite daugiau laiko altoriui ir vargonams.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Vor%20Frelsers%20Kirke%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">13:00–14:00</div>
+      <div class="stop-name">Café Wilder</div>
+      <div class="stop-notes">Pietūs jaukioje Christianshavn kavinėje – gera vidaus vieta, jei lauke šlapia.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Caf%C3%A9%20Wilder%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">14:30–15:30</div>
+      <div class="stop-name">Dansk Arkitektur Center (DAC, BLOX)</div>
+      <div class="stop-notes">Vietoj Nyhavno pasivaikščiojimo – modernus pastatas prie vandens su architektūros ir miesto planavimo parodomis, didelis stiklinis atriumas ir kavinė. Bilietas 135 DKK, atvira 10:00–21:00 (penktadienį).</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Danish%20Architecture%20Center%2C%20BLOX%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">15:45–16:45</div>
+      <div class="stop-name">Rundetårn</div>
+      <div class="stop-notes">Kyla sraigtine rampa uždaroje patalpoje – tinka ir lietingą dieną. Bilietas 60 DKK, atvira 10:00–18:00.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Rundet%C3%A5rn%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">17:00–18:45</div>
+      <div class="stop-name">Torvehallerne maisto turgus</div>
+      <div class="stop-notes">Dengta maisto turgavietė – visiškai nejautri orui. Paragaukite smørrebrød prie „Hallernes Smørrebrød".</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Torvehallerne%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <p>🚗 Viso važiavimo: ~35 min.</p>
+    <p><a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=Copenhagen+Airport,+Kastrup,+Denmark&destination=Torvehallerne,+Copenhagen,+Denmark&travelmode=driving&waypoints=Kenny+Drews+Vej+37,+2450+K%C3%B8benhavn,+Denmark|Vor+Frelsers+Kirke,+Copenhagen,+Denmark|Caf%C3%A9+Wilder,+Copenhagen,+Denmark|Danish+Architecture+Center,+BLOX,+Copenhagen,+Denmark|Rundet%C3%A5rn,+Copenhagen,+Denmark" target="_blank">🧭 Plano B maršrutas Google Maps</a></p>
+    <p><strong>Patarimas:</strong> DAC (BLOX) penktadieniais dirba iki 21:00, tad laiko spūsčių nebus; bilietas suaugusiam 135 DKK, jaunimui iki 27 m. – 60 DKK.</p>
+    <p>Planas B baigiasi toje pačioje vietoje kaip ir pagrindinis planas – Torvehallerne turguje.</p>
   </details>
 </section>
 
-<!-- ==================== DIENA 2 ==================== -->
-<section id="diena-2" class="day-section">
-  <h2>2 diena · 2026-10-24, šeštadienis</h2>
-  <p><strong>Karališkoji Kopenhaga ir menas</strong></p>
-  <p class="weather-note">🌦 Dulksna, 10,5–11,9°C, lietaus tikimybė 55%, vėjas iki 45,2 km/h — šią dieną gali labiau tikti Planas B.</p>
-  <p><a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=55.673600,12.598300&destination=55.696300,12.612600&travelmode=driving&waypoints=55.685700,12.577500|55.684000,12.593400|55.679900,12.575900|55.686600,12.580500|55.679900,12.590000" target="_blank">🧭 Dienos maršrutas Google Maps</a></p>
+<!-- DAY 2 -->
+<section id="day2">
+  <div class="day-header">
+    <div class="day-title">2 diena · 2026-10-24, šeštadienis — Karališkoji Kopenhaga ir menas</div>
+    <a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=55.673600,12.598300&destination=55.696300,12.612600&travelmode=driving&waypoints=55.685700,12.577500|55.684000,12.593400|55.679900,12.575900|55.686600,12.580500|55.679900,12.590000" target="_blank">🧭 Dienos maršrutas Google Maps</a>
+    <div class="weather-note">🌦 Orai: dulksna, 10–11°C, lietaus tikimybė 55%, bet vėjas iki <strong>45,8 km/h</strong> – stiprus. <span class="plan-b-hint">Šiandien planas B gali būti geresnis pasirinkimas (žr. apačioje).</span></div>
+  </div>
 
-  <div class="leg transit">Iš apartamentų (Sydhavnen) iki Christianijos ~30 min kelione metro (M4 iki centro, persėdimas į M1/M2) ir trumpu pėsčiomis</div>
-
-  <div class="stop-card">
-    <h3>Christiania</h3>
-    <p class="stop-time">09:20 – 10:00</p>
-    <p class="stop-notes">Savivaldi alternatyvi bendruomenė su ryškiu gatvės menu. Lankykite dieną, Pusher Street zonoje nuotraukų nedarykite.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">09:20–10:00</div>
+    <div class="stop-name">Christiania</div>
+    <div class="stop-notes">Savivaldi alternatyvi bendruomenė su ryškiu gatvės menu. Lankykite dieną, Pusher Street zonoje nuotraukų nedarykite.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.673600%2C12.598300" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/christiania-7cff3b94.jpg" alt="Christiania">
-      <p class="credit">Nuotrauka: Neptuul, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Christiania_in.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Neptuul, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Christiania_in.jpg" target="_blank">šaltinis</a></div>
     </div>
-    <span class="bar-tag">🍸 Galima užsukti: Café Nemoland — Christianijos savivaldžios bendruomenės socialinis centras lauko terasoje, unikali atmosfera. <a href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Nemoland%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></span>
   </div>
-  <div class="leg">Nuo Christianijos iki pilies maloniausia pėsčiomis per senamiestį (~30 min) arba autobusu</div>
+  <div class="leg">🚶 3 km, ~6 min – asfaltuotos miesto gatvės per centrą</div>
 
-  <div class="stop-card">
-    <h3>Rosenborgo pilis</h3>
-    <p class="stop-time">10:30 – 11:40</p>
-    <p class="stop-notes">Karališkos regalijos ir senas pilies sodas. Bilietas ~140 DKK, žiemos laikotarpiu atvira apie 10:00–16:00 – darbo laiką verta pasitikrinti prieš kelionę.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">10:30–11:40</div>
+    <div class="stop-name">Rosenborgo pilis</div>
+    <div class="stop-notes">Karališkos regalijos ir senas pilies sodas. Bilietas ~140 DKK, žiemos laikotarpiu atvira apie 10:00–16:00.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.685700%2C12.577500" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/rosenborgo-pilis-ebaff57b.jpg" alt="Rosenborgo pilis">
-      <p class="credit">Nuotrauka: Jakub Hałun, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Rosenborg_Palace,_Copenhagen,_Denmark,_20220617_0912_6704.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Jakub Hałun, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Rosenborg_Palace,_Copenhagen,_Denmark,_20220617_0912_6704.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">~15 min pėsčiomis nuo Rosenborgo</div>
+  <div class="leg">🚶 2 km, ~4 min – asfaltuotos centro gatvės</div>
 
-  <div class="stop-card">
-    <h3>Amalienborgas</h3>
-    <p class="stop-time">12:05 – 12:40</p>
-    <p class="stop-notes">Karališkoji rezidencija – sargybos keitimas vyksta apie 12:00. Muziejaus bilietas 125 DKK, šeštadienį atvira 10:00–16:00.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">12:05–12:40</div>
+    <div class="stop-name">Amalienborgas</div>
+    <div class="stop-notes">Karališkoji rezidencija – sargybos keitimas vyksta apie 12:00. Muziejaus bilietas 125 DKK, šeštadienį atvira 10:00–16:00.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.684000%2C12.593400" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/amalienborgas-c22d0a28.jpg" alt="Amalienborgas">
-      <p class="credit">Nuotrauka: Jebulon, CC0, <a href="https://commons.wikimedia.org/wiki/File:Two_of_Kongelige_livgarde_Amalienborg_Copenhagen_Denmark.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Jebulon, CC0, <a href="https://commons.wikimedia.org/wiki/File:Two_of_Kongelige_livgarde_Amalienborg_Copenhagen_Denmark.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">~15 min pėsčiomis nuo Amalienborgo</div>
+  <div class="leg">🚶 3 km, ~7 min – asfaltuotos centro gatvės</div>
 
-  <div class="stop-card">
-    <h3>Restaurant Schønnemann</h3>
-    <p class="stop-time">13:00 – 14:00</p>
-    <p class="stop-notes">Vienas seniausių ir labiausiai vertinamų smørrebrød restoranų mieste – tikras klasikinis danų pietų patiekalas.</p>
-    <span class="eatery-tag">🍽️ Pietūs: ~27 €/žm. — klasikinis smørrebrød restoranas</span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">13:00–14:00</div>
+    <div class="stop-name">Pietūs: Restaurant Schønnemann</div>
+    <div class="stop-notes">Vienas seniausių ir geriausiai vertinamų smørrebrød restoranų Kopenhagoje – autentiška seno stiliaus daniška užeiga. ~30 €/asm.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant%20Sch%C3%B8nnemann%2C%20Hauser%20Plads%2016%2C%201127%20K%C3%B8benhavn%20K" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/restaurant-sch-nnemann-ad36844c.jpg" alt="Restaurant Schønnemann">
-      <p class="credit">Nuotrauka: Kritzolina, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Sm%C3%B8rrebr%C3%B8d_in_Copenhagen_01.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Kritzolina, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Sm%C3%B8rrebr%C3%B8d_in_Copenhagen_01.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">Nuo restorano ~10 min pėsčiomis</div>
+  <div class="leg">🚶 3 km, ~7 min – asfaltuotos centro gatvės</div>
 
-  <div class="stop-card">
-    <h3>SMK – Danijos nacionalinė dailės galerija</h3>
-    <p class="stop-time">14:20 – 16:00</p>
-    <p class="stop-notes">Didelė dailės kolekcija nuo senųjų meistrų iki modernaus meno – gera vidaus alternatyva, jei lyja. Bilietas 140 DKK, šeštadienį atvira 10:00–18:00.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">14:20–16:00</div>
+    <div class="stop-name">SMK – Danijos nacionalinė dailės galerija</div>
+    <div class="stop-notes">Didelė dailės kolekcija nuo senųjų meistrų iki modernaus meno – gera vidaus alternatyva, jei lyja. Bilietas 140 DKK, šeštadienį atvira 10:00–18:00.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.686600%2C12.580500" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/smk-danijos-nacionalin-dail-s-galerija-6aa20228.jpg" alt="SMK">
-      <p class="credit">Nuotrauka: Daderot, CC0, <a href="https://commons.wikimedia.org/wiki/File:Statens_Museum_for_Kunst,_interior_-_Copenhagen_-_DSC08291.JPG" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Daderot, CC0, <a href="https://commons.wikimedia.org/wiki/File:Statens_Museum_for_Kunst,_interior_-_Copenhagen_-_DSC08291.JPG" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">Nuo SMK iki Nyhavno prieplaukos ~12 min pėsčiomis</div>
+  <div class="leg">🚶 2 km, ~4 min – trumpas žingsnis centre</div>
 
-  <div class="stop-card">
-    <h3>Pasiplaukiojimas kanalais (Canal Tours Copenhagen, Nyhavn prieplauka)</h3>
-    <p class="stop-time">16:20 – 17:20</p>
-    <p class="stop-notes">Valandos trukmės pasiplaukiojimas kanalais ir uostu – pamatysite Christianiją, Operos rūmus ir senamiesčio kanalus iš vandens, puikiu laiku saulėlydžiui (apie 17:15). Bilietas suaugusiam apie 100–130 DKK (~13–17 €); spalio pabaigoje reisų gali būti rečiau – tvarkaraštį verta pasitikrinti prieplaukoje ar internetu iš anksto.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">16:20–17:20</div>
+    <div class="stop-name">Pasiplaukiojimas kanalais (Canal Tours Copenhagen, Nyhavn prieplauka)</div>
+    <div class="stop-notes">Valandos trukmės pasiplaukiojimas kanalais ir uostu – pamatysite Christianiją, Operos rūmus ir senamiesčio kanalus iš vandens. Bilietas ~100–130 DKK; esant stipriam vėjui reisai gali būti atšaukti – patikrinkite tvarkaraštį prieplaukoje iš anksto.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.679900%2C12.590000" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/pasiplaukiojimas-kanalais-canal-tours-copenhagen-nyhavn-prie-5db0a03b.jpg" alt="Pasiplaukiojimas kanalais">
-      <p class="credit">Nuotrauka: Dietmar Rabich, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Kopenhagen_(DK),_Nyhavn_--_2017_--_1711.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Dietmar Rabich, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Kopenhagen_(DK),_Nyhavn_--_2017_--_1711.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg boat">Havnebusu (vandens viešasis transportas, tas pats bilietas kaip autobusui/metro) tiesiai nuo Nyhavno prieplaukos ~20–25 min</div>
+  <div class="leg">🚤 5 km, ~11 min – asfaltuotos miesto gatvės į Reffen (Refshaleøen) rajoną</div>
 
-  <div class="stop-card">
-    <h3>Reffen</h3>
-    <p class="stop-time">17:50 – 19:10</p>
-    <p class="stop-notes">Didžiausias gatvės maisto parkas prie vandens, patiekalai nuo ~70 DKK. Vieta atvira, vakarais vėsu – apsirenkite šiltai.</p>
-    <span class="eatery-tag">🍽️ Vakarienė: ~15 €/žm. — gatvės maisto turgus</span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">17:50–19:10</div>
+    <div class="stop-name">Vakarienė: Reffen</div>
+    <div class="stop-notes">Didžiausias Šiaurės Europos gatvės maisto turgus prie vandens, dešimtys prekystalių – geras pasirinkimas visai šeimai su skirtingais skoniais. ~18 €/asm. Iš Nyhavno prieplaukos po pasiplaukiojimo patogiausia plaukti Havnebusu tiesiai nuo Nyhavno prieplaukos – galioja tas pats bilietas kaip autobusui ar metro. Vieta atvira, vakarais vėsu – apsirenkite šiltai.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.696300%2C12.612600" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/reffen-a32f1dd9.jpg" alt="Reffen">
-      <p class="credit">Nuotrauka: Turaids, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Reffen_Copenhagen_Street_Food_Market.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Turaids, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Reffen_Copenhagen_Street_Food_Market.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
 
   <details class="plan-b">
     <summary>🌧 Planas B (jei blogas oras)</summary>
-    <p><strong>Jautru orui:</strong> Christiania pasivaikščiojimas ir sargybos keitimas Amalienborge vyksta lauke, o pasiplaukiojimas atviroje valtyje kanalais ir vakarienė atvirame Reffen maisto parke taptų nemalonūs dėl stipraus vėjo (iki 45 km/h) ir lietaus (6,7 mm).</p>
-    <p><strong>Architektūra vietoj kanalų plaukimo, Reffen su priedanga</strong></p>
-    <ul>
-      <li>09:20–10:00 Christiania — trumpesnis pasivaikščiojimas, laikytis dengtų takų tarp pastatų.</li>
-      <li>10:30–11:40 Rosenborgo pilis — vidaus salės, nuo oro nepriklauso.</li>
-      <li>12:05–12:40 Amalienborgas (muziejaus salės) — sargybos keitimo lauke ilgai nestebėti, eiti tiesiai į šildomas sales.</li>
-      <li>13:00–14:00 Restaurant Schønnemann — pietūs patalpose.</li>
-      <li>14:20–16:00 SMK — visa patalpose.</li>
-      <li>16:25–17:35 BLOX (Danijos architektūros centras) — ~20–25 min nuo SMK pėsčiomis/autobusu. Modernus pastatas prie vandens, uostas ir Christiania matomi iš šiltos vidinės patalpos – pakaitalas kanalų plaukimui. Nemokama, šeštadienį 10:00–21:00.</li>
-      <li>18:00–19:20 Reffen — autobusu arba Havnebusu nuo BLOX ~20–25 min. Rinktis dengtus prekystalius ir šildomą vidinę salę (Reffen Hallen).</li>
-    </ul>
-    <p>Bendras vairavimo/kelionės laikas: ~40 min. Baigiasi toje pačioje vietoje kaip pagrindinis planas.</p>
-    <p><a class="route-btn secondary" href="https://www.google.com/maps/dir/?api=1&origin=55.673600,12.598300&destination=55.696300,12.612600&travelmode=driving&waypoints=55.685700,12.577500|55.684000,12.593400|55.679900,12.575900|55.686600,12.580500|55.672100,12.579200" target="_blank">🧭 Planas B maršrutas Google Maps</a></p>
-    <p><strong>Patarimas:</strong> Prieš išvykstant patikrinkite BLOX darbo laiką tą šeštadienį – paprastai 10:00–21:00, įėjimas nemokamas. Vakarienei Reffen pasirinkite šildomą vidinę salę, ne atvirus stalus prie vandens.</p>
+    <p><strong>Orui jautru:</strong> pasiplaukiojimas kanalais atviroje valtyje – esant tokiam vėjui (iki 45,8 km/h) reisai dažnai atšaukiami arba nesaugūs; Christiania ir Reffen – lauko erdvės (trumpos, bet orui jautrios).</p>
+    <p><strong>Muziejai ir dizainas vietoj kanalo kelionės</strong></p>
+    <div class="stop">
+      <div class="stop-time">09:20–10:00</div>
+      <div class="stop-name">Christiania</div>
+      <div class="stop-notes">Trumpas pasivaikščiojimas – vėjuotą/lietingą rytą rinkitės dengtus praėjimus ir mažas galerijas, ilgai neužtrukite atvirose vietose.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.673600%2C12.598300" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">10:30–11:40</div>
+      <div class="stop-name">Rosenborgo pilis</div>
+      <div class="stop-notes">Pilnai vidaus objektas – karališkos regalijos, geras pasirinkimas blogam orui. Bilietas ~140 DKK.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.685700%2C12.577500" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">12:05–12:40</div>
+      <div class="stop-name">Amalienborgas</div>
+      <div class="stop-notes">Muziejaus ekspozicija vidun, sargybos keitimą stebėkite trumpai pro langą ar iš prieangio, jei lyja.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.684000%2C12.593400" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">13:00–14:00</div>
+      <div class="stop-name">Restaurant Schønnemann</div>
+      <div class="stop-notes">Klasikinis smørrebrød restoranas – vidaus vieta.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.679900%2C12.575900" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">14:20–16:00</div>
+      <div class="stop-name">SMK</div>
+      <div class="stop-notes">Didelė vidaus kolekcija – gera alternatyva lietingai dienai. Bilietas 140 DKK.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.686600%2C12.580500" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">16:20–17:20</div>
+      <div class="stop-name">Designmuseum Danmark</div>
+      <div class="stop-notes">Vietoj kanalo kelionės – didžiausia Skandinavijos dizaino kolekcija senoje ligoninės pastate su vidiniu kiemu. Bilietas 140 DKK, šeštadienį dirba 10:00–18:00, ~10 min pėsčiomis nuo SMK.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Designmuseum%20Danmark%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">17:50–19:10</div>
+      <div class="stop-name">Reffen</div>
+      <div class="stop-notes">Gatvės maisto parkas prie vandens – rinkitės prekystalius su dengtomis/šildomomis sėdimomis vietomis, apsirenkite šiltai.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.696300%2C12.612600" target="_blank">📍 Google Maps</a>
+    </div>
+    <p>🚗 Viso važiavimo: ~39 min.</p>
+    <p><a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=55.673600,12.598300&destination=55.696300,12.612600&travelmode=driving&waypoints=55.685700,12.577500|55.684000,12.593400|55.679900,12.575900|55.686600,12.580500|Designmuseum+Danmark,+Copenhagen,+Denmark" target="_blank">🧭 Plano B maršrutas Google Maps</a></p>
+    <p><strong>Patarimas:</strong> Designmuseum Danmark šeštadienį dirba 10:00–18:00, bilietas 140 DKK; Reffen turi dengtas/šildomas sėdimas vietas – rinkitės jas, jei stipriai lis.</p>
+    <p>Planas B baigiasi toje pačioje vietoje kaip ir pagrindinis planas – Reffen.</p>
   </details>
 </section>
 
-<!-- ==================== DIENA 3 ==================== -->
-<section id="diena-3" class="day-section">
-  <h2>3 diena · 2026-10-25, sekmadienis</h2>
-  <p><strong>Senamiestis, Tivoli ir Deep Purple koncertas</strong></p>
-  <p class="weather-note">🌧 Lietus, 8,8–10,9°C, lietaus tikimybė 69%, vėjas iki 49,2 km/h — stiprus vėjas ir lietus, šią dieną Planas B gali būti geresnis pasirinkimas.</p>
-  <p><a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=55.676100,12.578900&destination=55.625600,12.572600&travelmode=driving&waypoints=55.674400,12.577400|55.673600,12.568100|55.628600,12.571300" target="_blank">🧭 Dienos maršrutas Google Maps</a></p>
+<!-- DAY 3 -->
+<section id="day3">
+  <div class="day-header">
+    <div class="day-title">3 diena · 2026-10-25, sekmadienis — Senamiestis, Tivoli ir Deep Purple koncertas</div>
+    <a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=55.676100,12.578900&destination=55.625600,12.572600&travelmode=driving&waypoints=55.674400,12.577400|55.673600,12.568100|55.628600,12.571300" target="_blank">🧭 Dienos maršrutas Google Maps</a>
+    <div class="weather-note">🌦 Orai: dulksna, 9–11°C, lietaus tikimybė 69%, vėjas iki <strong>42,8 km/h</strong>. <span class="plan-b-hint">Tivoli atrakcionai gali būti uždaryti dėl vėjo – šiandien planas B gali būti geresnis pasirinkimas.</span></div>
+  </div>
 
-  <div class="event-box">🎉 <strong>Deep Purple koncertas</strong> — Royal Arena, Hannemanns Allé 18 — durys atsidaro apie 18:00. <br>🕐 <strong>Laikrodžiai pasukami į žiemos laiką</strong> šios dienos naktį (03:00 → 02:00) — naktis bus valanda ilgesnė.</div>
+  <div class="card" style="background:#fdecea;border-color:#f0c4bf;">
+    <p>🎉 <strong>Deep Purple koncertas</strong> Royal Arenoje šį vakarą – durys atsidaro apie 18:00. Taip pat naktį iš šeštadienio į sekmadienį (spalio 24/25-osios naktis) laikrodžiai pasukami į žiemos laiką – naktis bus viena valanda ilgesnė, patikrinkite, ar telefonas atsinaujina automatiškai.</p>
+  </div>
 
-  <div class="stop-card">
-    <h3>Christiansborgo pilis</h3>
-    <p class="stop-time">10:00 – 11:30</p>
-    <p class="stop-notes">Iš apartamentų (Sydhavnen) iki senamiesčio ~30 min kelione metro (M4 iki centro) ir pėsčiomis. Parlamento rūmai su karališkomis priėmimo salėmis ir senovinėmis griuvėsiomis požemiuose. Bilietas 215 DKK (internetu) / 225 DKK vietoje, atvira 10:00–17:00.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">10:00–11:30</div>
+    <div class="stop-name">Christiansborgo pilis</div>
+    <div class="stop-notes">Parlamento rūmai su karališkomis priėmimo salėmis ir senovinėmis griuvėsiomis požemiuose. Bilietas 215 DKK (internetu) / 225 DKK vietoje, atvira 10:00–17:00.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.676100%2C12.578900" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/christiansborgo-pilis-53bfc874.jpg" alt="Christiansborgo pilis">
-      <p class="credit">Nuotrauka: Moahim, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:2018_-_Christiansborg_from_the_Marble_Bridge.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Moahim, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:2018_-_Christiansborg_from_the_Marble_Bridge.jpg" target="_blank">šaltinis</a></div>
     </div>
+    <div class="bar-tag">🍸 Netoliese: Ruby – vienas geriausiai pasaulyje vertinamų kokteilių barų, įsikūręs 1740 m. senamiesčio pirklio namuose priešais Christiansborgą. <a href="https://www.google.com/maps/search/?api=1&amp;query=Ruby%2C%20Nybrogade%2010%2C%201203%20K%C3%B8benhavn%20K" target="_blank">📍 Google Maps</a></div>
   </div>
-  <div class="leg">~3 min pėsčiomis, čia pat</div>
+  <div class="leg">🚶 0 km, ~1 min – tas pats senamiesčio kvartalas</div>
 
-  <div class="stop-card">
-    <h3>Ny Carlsberg Glyptotek</h3>
-    <p class="stop-time">11:45 – 12:50</p>
-    <p class="stop-notes">Antikos ir impresionizmo kolekcija aplink palmėmis apsodintą žiemos sodą – puiki vidaus alternatyva lietingai dienai. Bilietas 125 DKK, sekmadienį atvira 10:00–17:00.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">11:45–12:50</div>
+    <div class="stop-name">Ny Carlsberg Glyptotek</div>
+    <div class="stop-notes">Antikos ir impresionizmo kolekcija aplink palmėmis apsodintą žiemos sodą – puiki vidaus alternatyva lietingai dienai. Bilietas 125 DKK, sekmadienį atvira 10:00–17:00.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.674400%2C12.577400" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/ny-carlsberg-glyptotek-e02dedee.jpg" alt="Ny Carlsberg Glyptotek">
-      <p class="credit">Nuotrauka: Richard Mortel, CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:Alexander_the_Great,_from_Alexandria,_Egypt,_3rd_cent._BCE,_Ny_Carlsberg_Glyptotek,_Copenhagen_(5)_(36375553176).jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Richard Mortel, CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:Alexander_the_Great,_from_Alexandria,_Egypt,_3rd_cent._BCE,_Ny_Carlsberg_Glyptotek,_Copenhagen_(5)_(36375553176).jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">Tas pats muziejaus pastatas</div>
+  <div class="leg">🚶 0 km, ~0 min – tas pats muziejaus pastatas</div>
 
-  <div class="stop-card">
-    <h3>Café Glyptoteket</h3>
-    <p class="stop-time">13:00 – 14:00</p>
-    <p class="stop-notes">Pietūs tiesiog muziejaus žiemos sode tarp palmių – rami ir netikėta vieta pietums.</p>
-    <span class="eatery-tag">🍽️ Pietūs: ~18 €/žm. — muziejaus kavinė</span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">13:00–14:00</div>
+    <div class="stop-name">Pietūs: Café Glyptoteket</div>
+    <div class="stop-notes">Pietūs tiesiog muziejaus žiemos sode tarp palmių – rami ir netikėta vieta pietums. ~20 €/asm.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Caf%C3%A9%20Glyptoteket%2C%20Dantes%20Plads%207%2C%201556%20K%C3%B8benhavn%20V" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/caf-glyptoteket-e02dedee.jpg" alt="Café Glyptoteket">
-      <p class="credit">Nuotrauka: Richard Mortel, CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:Alexander_the_Great,_from_Alexandria,_Egypt,_3rd_cent._BCE,_Ny_Carlsberg_Glyptotek,_Copenhagen_(5)_(36375553176).jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Richard Mortel, CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:Alexander_the_Great,_from_Alexandria,_Egypt,_3rd_cent._BCE,_Ny_Carlsberg_Glyptotek,_Copenhagen_(5)_(36375553176).jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">~8 min pėsčiomis nuo muziejaus</div>
+  <div class="leg">🚶 1 km, ~2 min – trumpas žingsnis centre</div>
 
-  <div class="stop-card">
-    <h3>Tivoli</h3>
-    <p class="stop-time">14:15 – 16:00</p>
-    <p class="stop-notes">Senas pramogų parkas, spalio pabaigoje papuoštas tūkstančiais Helovino moliūgų. Bilietas 200 DKK, vartai atviri nuo 11:00.</p>
-    <span class="bar-tag">🍸 Galima užsukti: Nimb Bar — ikoniškas 1909 m. maurų stiliaus Nimb rūmų pastatas Tivoli parko viduje, gražiausia vakare, kai parkas apšviestas. <a href="https://www.google.com/maps/search/?api=1&query=Nimb%20Bar%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">14:15–16:00</div>
+    <div class="stop-name">Tivoli</div>
+    <div class="stop-notes">Senas pramogų parkas, spalio pabaigoje papuoštas tūkstančiais Helovino moliūgų. Bilietas 200 DKK, vartai atviri nuo 11:00. Stipriai pučiant vėjui kai kurie atrakcionai gali būti uždaryti.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.673600%2C12.568100" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/tivoli-ab04ef1b.jpg" alt="Tivoli">
-      <p class="credit">Nuotrauka: Jakub Hałun, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Fountain_in_Tivoli_Gardens,_Copenhagen,_20220618_1307_7156.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Jakub Hałun, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Fountain_in_Tivoli_Gardens,_Copenhagen,_20220618_1307_7156.jpg" target="_blank">šaltinis</a></div>
     </div>
+    <div class="bar-tag">🍸 Netoliese: Nimb Bar – 1909 m. maurietiško stiliaus Nimb rūmų buvusi baliaus salė su krištolo sietynais, Tivoli parko viduryje. <a href="https://www.google.com/maps/search/?api=1&amp;query=Nimb%20Bar%2C%20Bernstorffsgade%205%2C%201577%20K%C3%B8benhavn%20V" target="_blank">📍 Google Maps</a></div>
   </div>
-  <div class="leg transit">Nuo Tivoli iki Field's patogiausia M1 metro linija (Rådhuspladsen/Nørreport → Ørestad), ~20 min su trumpu pėsčiomis iki stotelės</div>
+  <div class="leg">🚍 7 km, ~12 min – asfaltuotos miesto gatvės į pietus, per Vesterbro/Amager rajonus</div>
 
-  <div class="stop-card">
-    <h3>Field's prekybos centras (vakarienė)</h3>
-    <p class="stop-time">16:30 – 17:30</p>
-    <p class="stop-notes">Greita vakarienė prekybos centro maisto prekystaliuose prieš koncertą – patogu, nes čia pat Ørestado metro stotis, viena stotelė iki Royal Arena.</p>
-    <span class="eatery-tag">🍽️ Vakarienė: ~14 €/žm. — prekybos centro maisto erdvė</span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">16:30–17:30</div>
+    <div class="stop-name">Vakarienė: Field's prekybos centras</div>
+    <div class="stop-notes">Greita ir patogi vakarienė čia pat prie Ørestado metro stoties, viena stotelė iki Royal Arena – patogu prieš koncertą, kai laiko nedaug. ~15 €/asm.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Field%27s%20maisto%20aik%C5%A1tel%C4%97%2C%20Arne%20Jacobsens%20All%C3%A9%2012%2C%202300%20K%C3%B8benhavn%20S" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/field-s-prekybos-centras-vakarien-8088abfb.jpg" alt="Field's">
-      <p class="credit">Nuotrauka: Leif Jørgensen, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Field%27s_02.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Leif Jørgensen, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Field%27s_02.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">Viena stotelė metro iki Royal Arena</div>
+  <div class="leg">🚇 6 km, ~8 min – asfaltuotos Ørestad rajono gatvės/greitkelio atšaka</div>
 
-  <div class="stop-card">
-    <h3>Royal Arena – Deep Purple koncertas</h3>
-    <p class="stop-time">17:45 – 22:30</p>
-    <p class="stop-notes">Deep Purple koncertas – durys atsidaro apie 18:00, tikslų laiką patikrinkite artėjant renginiui. Prie Ørestado stoties šį vakarą tikėtinos minios prieš ir po koncerto, skirkite laiko eilėms. Naktį į sekmadienį laikrodžiai pasukami į žiemos laiką – patikrinkite, ar telefonas atsinaujino automatiškai.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">17:45–22:30</div>
+    <div class="stop-name">Royal Arena – Deep Purple koncertas</div>
+    <div class="stop-notes">Durys atsidaro apie 18:00, tikslų laiką patikrinkite artėjant renginiui. Prie Ørestado stoties šį vakarą tikėtinos minios prieš ir po koncerto, skirkite laiko eilėms. Po koncerto (baigiasi apie 22:30) grįžtant į Sydhavnen, iš anksto pasitikrinkite vakarinio S-traukinio ar autobuso tvarkaraštį.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.625600%2C12.572600" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/royal-arena-deep-purple-koncertas-e308d9d9.jpg" alt="Royal Arena">
-      <p class="credit">Nuotrauka: Jenny Andersson / News Oresund, CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:RoyalArena_20170811_N8B0024_(36517811566).jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Jenny Andersson / News Oresund, CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:RoyalArena_20170811_N8B0024_(36517811566).jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
 
   <details class="plan-b">
     <summary>🌧 Planas B (jei blogas oras)</summary>
-    <p><strong>Jautru orui:</strong> Diena su didžiausiu numatomu lietumi (10,2 mm) ir vėju (49 km/h) per visą kelionę – Tivoli yra lauko pramogų parkas, atrakcionai ir vaikščiojimas neapsaugotoje teritorijoje tokiu oru nemalonūs.</p>
-    <p><strong>Daugiau meno vietoj Tivoli lietingiausią dieną</strong></p>
-    <ul>
-      <li>10:00–11:30 Christiansborgo pilis — visa patalpose. Bilietas 215 DKK.</li>
-      <li>11:45–12:50 Ny Carlsberg Glyptotek — ~3 min pėsčiomis, su žiemos sodu.</li>
-      <li>13:00–14:00 Café Glyptoteket — pietūs, visiškai patalpose.</li>
-      <li>14:10–15:20 Thorvaldsens Museum — ~5 min pėsčiomis, čia pat Slotsholmene. Bertelio Thorvaldseno skulptūros, visa patalpose. Bilietas ~115 DKK, sekmadienį 10:00–17:00.</li>
-      <li>15:50–17:15 Field's prekybos centras — ~20–25 min M1 metro linija. Ramesnė, ilgesnė vakarienė prieš koncertą.</li>
-      <li>17:45–22:30 Royal Arena – Deep Purple koncertas.</li>
-    </ul>
-    <p>Bendras vairavimo/kelionės laikas: ~20 min. Baigiasi toje pačioje vietoje kaip pagrindinis planas.</p>
-    <p><a class="route-btn secondary" href="https://www.google.com/maps/dir/?api=1&origin=55.676100,12.578900&destination=55.625600,12.572600&travelmode=driving&waypoints=55.674400,12.577400|55.676700,12.578300|55.628600,12.571300" target="_blank">🧭 Planas B maršrutas Google Maps</a></p>
-    <p><strong>Patarimas:</strong> Thorvaldsens muziejus yra per kelis žingsnius nuo Christiansborgo – jokio papildomo kelio nereikia. Koncerto durys ~18:00, patikrinti artėjant.</p>
+    <p><strong>Orui jautru:</strong> Tivoli – atviras pramogų parkas, atrakcionai dažnai uždaromi dėl vėjo (iki 42,8 km/h) ir lietaus; likusi dienos dalis (pilys, muziejai, koncertas) jau vidaus objektai.</p>
+    <p><strong>Senamiestis ir Nacionalinis muziejus vietoj Tivoli</strong></p>
+    <div class="stop">
+      <div class="stop-time">10:00–11:30</div>
+      <div class="stop-name">Christiansborgo pilis</div>
+      <div class="stop-notes">Parlamento rūmai ir požemių griuvėsiai – vidaus objektas. Bilietas 215 DKK (internetu).</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.676100%2C12.578900" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">11:45–12:50</div>
+      <div class="stop-name">Ny Carlsberg Glyptotek</div>
+      <div class="stop-notes">Antikos ir impresionizmo kolekcija žiemos sode – vidaus objektas. Bilietas 125 DKK.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.674400%2C12.577400" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">13:00–14:00</div>
+      <div class="stop-name">Café Glyptoteket</div>
+      <div class="stop-notes">Pietūs muziejaus žiemos sode tarp palmių.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.674400%2C12.577400" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">14:15–16:00</div>
+      <div class="stop-name">Nationalmuseet</div>
+      <div class="stop-notes">Vietoj Tivoli – didžiausias Danijos istorijos muziejus (vikingų radiniai, karietos, žaislų kolekcija). Nuolatinė ekspozicija nemokama, dirba 10:00–17:00, vos 5 min pėsčiomis nuo Glyptoteko.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Nationalmuseet%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">16:30–17:30</div>
+      <div class="stop-name">Field's prekybos centras</div>
+      <div class="stop-notes">Greita vakarienė prieš koncertą – vidaus objektas, čia pat Ørestado metro stotis.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.628600%2C12.571300" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">17:45–22:30</div>
+      <div class="stop-name">Royal Arena – Deep Purple koncertas</div>
+      <div class="stop-notes">Vidaus arena – orui nejautru. Durys atsidaro apie 18:00.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=55.625600%2C12.572600" target="_blank">📍 Google Maps</a>
+    </div>
+    <p>🚗 Viso važiavimo: ~19 min.</p>
+    <p><a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=55.676100,12.578900&destination=55.625600,12.572600&travelmode=driving&waypoints=55.674400,12.577400|Nationalmuseet,+Copenhagen,+Denmark|55.628600,12.571300" target="_blank">🧭 Plano B maršrutas Google Maps</a></p>
+    <p><strong>Patarimas:</strong> Nationalmuseet nuolatinė ekspozicija nemokama, sekmadienį dirba 10:00–17:00, ~5 min pėsčiomis nuo Glyptoteko.</p>
+    <p>Planas B baigiasi toje pačioje vietoje kaip ir pagrindinis planas – Royal Arena, Deep Purple koncertas.</p>
   </details>
 </section>
 
-<!-- ==================== DIENA 4 ==================== -->
-<section id="diena-4" class="day-section">
-  <h2>4 diena · 2026-10-26, pirmadienis</h2>
-  <p><strong>Frederiksberg parkas ir skrydis namo</strong></p>
-  <p class="weather-note">🌦 Kaune: dulksna, 9,0–12,8°C, lietaus tikimybė 42%, vėjas iki 42,1 km/h.</p>
-  <p><a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=55.677500,12.523600&destination=55.618000,12.647600&travelmode=driving&waypoints=55.656000,12.547500" target="_blank">🧭 Dienos maršrutas Google Maps</a></p>
+<!-- DAY 4 -->
+<section id="day4">
+  <div class="day-header">
+    <div class="day-title">4 diena · 2026-10-26, pirmadienis — Frederiksberg parkas ir skrydis namo</div>
+    <a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=Frederiksberg+Have,+Copenhagen,+Denmark&destination=Copenhagen+Airport,+Kastrup,+Denmark&travelmode=driving&waypoints=Kenny+Drews+Vej+37,+2450+K%C3%B8benhavn,+Denmark" target="_blank">🧭 Dienos maršrutas Google Maps</a>
+    <div class="weather-note">🌦 Orai: dulksna, 10–11°C, lietaus tikimybė 42%, vėjas iki 29,4 km/h.</div>
+  </div>
 
-  <div class="stop-card">
-    <h3>Frederiksberg Have (parkas)</h3>
-    <p class="stop-time">10:00 – 11:15</p>
-    <p class="stop-notes">Nemokamas, visada atviras parkas su kanalais, tiltukais ir gulbėmis – rami vieta paskutiniam rytiniam pasivaikščiojimui prieš kelionę į oro uostą (Nationalmuseet šią dieną uždarytas, nes pirmadienis – daugumos Kopenhagos muziejų poilsio diena). Automobilio šioje kelionėje nenuomojame – grįžkite į apartamentus tuo pačiu viešuoju transportu. Jei liko laiko, pro šalį – Frederiksberg Allé su kavinėmis.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">10:00–11:15</div>
+    <div class="stop-name">Frederiksberg Have (parkas)</div>
+    <div class="stop-notes">Nemokamas, visada atviras parkas su kanalais, tiltukais ir gulbėmis – rami vieta paskutiniam rytiniam pasivaikščiojimui prieš kelionę į oro uostą (pirmadienį dauguma Kopenhagos muziejų, tarp jų Nationalmuseet, uždaryti – Frederiksberg Have visada atviras ir nemokamas). Jei liko laiko, pro šalį – Frederiksberg Allé su kavinėmis.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Frederiksberg%20Have%2C%20Copenhagen%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/frederiksberg-have-parkas-5f786fd9.jpg" alt="Frederiksberg Have">
-      <p class="credit">Nuotrauka: Jakub Hałun, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Branta_canadensis,_Frederiksberg_Have,_Denmark,_20220617_1627_6918.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Jakub Hałun, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Branta_canadensis,_Frederiksberg_Have,_Denmark,_20220617_1627_6918.jpg" target="_blank">šaltinis</a></div>
     </div>
+    <div class="eatery-tag">☕ Pusryčiams netoliese: Sonny – jauki kepyklos kavinė prie Frederiksberg Allé, dirba ir pirmadieniais nuo 8 val. ~10 €/asm. <a href="https://www.google.com/maps/search/?api=1&amp;query=Sonny%2C%20Frederiksberg%20All%C3%A9%2012%2C%201820%20Frederiksberg%20C" target="_blank">📍 Google Maps</a></div>
   </div>
-  <div class="leg transit">~25 min kelione autobusu/metro atgal į Sydhavnen</div>
+  <div class="leg">🚍 5 km, ~9 min – asfaltuotos miesto gatvės iš Frederiksberg į Sydhavnen</div>
 
-  <div class="stop-card">
-    <h3>Apartamentai su kanalo vaizdu – atsiskaitymas (Sydhavnen)</h3>
-    <p class="stop-time">11:40 – 12:00</p>
-    <p class="stop-notes">Apartamento atsiskaitymas ir bagažo pasiėmimas (Kenny Drews Vej 31, 2 a., 9 būst., Sydhavnen, 2450 Kopenhaga). Iš Sydhavnen iki oro uosto viešuoju transportu (traukinys/metro per centrą) užtrunka apie 40 min – ilgiau nei iš centro, tad išvykite ne vėliau kaip 12:00.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">11:40–12:00</div>
+    <div class="stop-name">Apartamentai – atsiskaitymas</div>
+    <div class="stop-notes">Bagažo pasiėmimas. Iki oro uosto viešuoju transportu ~40 min, išvykite ne vėliau kaip 12:00.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kenny%20Drews%20Vej%2037%2C%202450%20K%C3%B8benhavn%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/apartamentai-su-kanalo-vaizdu-atsiskaitymas-sydhavnen-a7d66184.jpg" alt="Apartamentai – atsiskaitymas">
-      <p class="credit">Nuotrauka: Ramblersen2, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:V._A._Borgens_Vej_02.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: Ramblersen2, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:V._A._Borgens_Vej_02.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg transit">Apie 40 min viešuoju transportu (traukinys/metro per centrą) iki oro uosto</div>
+  <div class="leg">🚗 10 km, ~14 min – asfaltuota kelio atšaka iš Sydhavnen per greitkelį į oro uostą</div>
 
-  <div class="stop-card">
-    <h3>Kopenhagos oro uostas (CPH) – registracija ir sauga</h3>
-    <p class="stop-time">12:40 – 13:00</p>
-    <p class="stop-notes">Praeikite registraciją ir saugumo patikrą su atsargos laiku prieš 15:15 skrydį.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">12:40–13:00</div>
+    <div class="stop-name">Kopenhagos oro uostas (CPH) – registracija ir sauga</div>
+    <div class="stop-notes">Registracija ir saugumo patikra su atsargos laiku prieš 15:15 skrydį. Į oro uostą atvykstama apie 2,5 val. prieš skrydį – registracijai, bagažo pridavimui ir pietums laiko pakanka.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/kopenhagos-oro-uostas-cph-registracija-ir-sauga-b842c642.jpg" alt="Oro uostas – registracija">
-      <p class="credit">Nuotrauka: kallerna, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: kallerna, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">Tas pats oro uosto terminalas</div>
+  <div class="leg">🚶 0 km, ~0 min – tas pats oro uosto terminalas</div>
 
-  <div class="stop-card">
-    <h3>Pietūs oro uosto terminale</h3>
-    <p class="stop-time">13:00 – 14:00</p>
-    <p class="stop-notes">Paskutiniai pietūs Danijoje terminalo kavinėse po saugumo patikros.</p>
-    <span class="eatery-tag">🍽️ Pietūs: ~9 €/žm. — Lagkagehuset, daniška kepykla-kavinė</span>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">13:00–14:00</div>
+    <div class="stop-name">Pietūs oro uosto terminale: Aamanns</div>
+    <div class="stop-notes">Tradicinis daniškas smørrebrød tiesiog terminale – paskutinė proga paragauti vietinės virtuvės prieš įlipant į lėktuvą. ~20 €/asm.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Aamanns%2C%20Kopenhaga" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/piet-s-oro-uosto-terminale-b842c642.jpg" alt="Pietūs oro uosto terminale">
-      <p class="credit">Nuotrauka: kallerna, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: kallerna, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
-  <div class="leg">Tas pats oro uosto terminalas</div>
+  <div class="leg">🚶 0 km, ~0 min – tas pats oro uosto terminalas</div>
 
-  <div class="stop-card">
-    <h3>Išvykimo vartai – skrydis CPH→KUN</h3>
-    <p class="stop-time">14:00 – 15:15</p>
-    <p class="stop-notes">Laukimas prie išvykimo vartų, skrydis į Kauną išvyksta 15:15, atvykimas 17:45 vietos laiku.</p>
-    <div class="stop-photo">
+  <div class="stop">
+    <div class="stop-time">14:00–15:15</div>
+    <div class="stop-name">Išvykimo vartai – skrydis CPH→KUN</div>
+    <div class="stop-notes">Laukimas prie išvykimo vartų, skrydis į Kauną išvyksta 15:15, atvykimas 17:45 vietos laiku.</div>
+    <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    <div class="single-photo">
       <img class="spot-thumb" src="images/i-vykimo-vartai-skrydis-cph-kun-b842c642.jpg" alt="Išvykimo vartai">
-      <p class="credit">Nuotrauka: kallerna, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank">šaltinis</a></p>
+      <div class="photo-credit">Autorius: kallerna, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Copenhagen_airport_from_air.jpg" target="_blank">šaltinis</a></div>
     </div>
   </div>
 
   <details class="plan-b">
     <summary>🌧 Planas B (jei blogas oras)</summary>
-    <p><strong>Jautru orui:</strong> Frederiksberg Have yra atviras parkas su kanalais ir tiltukais – ramus rytinis pasivaikščiojimas lietuje/vėjyje praranda prasmę, o dauguma apylinkės muziejų pirmadienį šiaip uždaryti.</p>
-    <p><strong>Priedanga Frederiksberg aplinkoje prieš skrydį</strong></p>
-    <ul>
-      <li>10:00–11:15 Frederiksberg Have – dengta oranžerija / kavinė — lietuje/vėjyje pasilikti prie parko įėjimo paviljono ar kavinės su vaizdu į kanalą, vietoj ilgo pasivaikščiojimo atviromis alėjomis. Nemokama, visada pasiekiama.</li>
-      <li>11:40–12:00 Apartamentai, atsiskaitymas (Sydhavnen) — bagažo pasiėmimas, išvykti ne vėliau 12:00.</li>
-      <li>12:40–13:00 Kopenhagos oro uostas (CPH) — registracija ir saugumo patikra.</li>
-      <li>13:00–14:00 Pietūs oro uosto terminale.</li>
-      <li>14:00–15:15 Išvykimo vartai – skrydis CPH→KUN.</li>
-    </ul>
-    <p>Bendras vairavimo/kelionės laikas: ~23 min. Baigiasi toje pačioje vietoje kaip pagrindinis planas.</p>
-    <p><a class="route-btn secondary" href="https://www.google.com/maps/dir/?api=1&origin=55.677500,12.523600&destination=55.618000,12.647600&travelmode=driving&waypoints=55.656000,12.547500" target="_blank">🧭 Planas B maršrutas Google Maps</a></p>
-    <p><strong>Patarimas:</strong> Dauguma Kopenhagos muziejų (taip pat ir mažesni Frederiksberg muziejai) pirmadienį uždaryti – geriausia priedanga šią dieną yra kavinė ar dengta oranžerija, ne ekspozicija.</p>
+    <p><strong>Orui jautru:</strong> Frederiksberg Have – lauko parko pasivaikščiojimas šaltą/vėjuotą rytą; likusi dienos dalis – tik atsiskaitymas ir skrydis, orui nejautru.</p>
+    <p><strong>Zoologijos sodas vietoj parko pasivaikščiojimo</strong></p>
+    <div class="stop">
+      <div class="stop-time">10:00–11:15</div>
+      <div class="stop-name">Københavns Zoo</div>
+      <div class="stop-notes">Vietoj Frederiksberg Have pasivaikščiojimo – zoologijos sodas yra tiesiai prie parko (įėjimas ~2 min pėsčiomis). Dramblių, tropikų ir akvariumo namai – šilta ir sausa alternatyva.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=K%C3%B8benhavn%20Zoo%2C%20Frederiksberg%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">11:40–12:00</div>
+      <div class="stop-name">Apartamentai – atsiskaitymas</div>
+      <div class="stop-notes">Bagažo pasiėmimas. Iki oro uosto viešuoju transportu ~40 min, išvykite ne vėliau kaip 12:00.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kenny%20Drews%20Vej%2037%2C%202450%20K%C3%B8benhavn%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">12:40–13:00</div>
+      <div class="stop-name">Oro uostas – registracija ir sauga</div>
+      <div class="stop-notes">Registracija ir saugumo patikra su atsargos laiku prieš 15:15 skrydį.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">13:00–14:00</div>
+      <div class="stop-name">Pietūs oro uosto terminale</div>
+      <div class="stop-notes">Paskutiniai pietūs Danijoje terminalo kavinėse po saugumo patikros.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <div class="stop">
+      <div class="stop-time">14:00–15:15</div>
+      <div class="stop-name">Išvykimo vartai – skrydis CPH→KUN</div>
+      <div class="stop-notes">Laukimas prie išvykimo vartų, skrydis į Kauną išvyksta 15:15.</div>
+      <a class="maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark" target="_blank">📍 Google Maps</a>
+    </div>
+    <p>🚗 Viso važiavimo: ~21 min.</p>
+    <p><a class="route-btn" href="https://www.google.com/maps/dir/?api=1&origin=K%C3%B8benhavn+Zoo,+Frederiksberg,+Denmark&destination=Copenhagen+Airport,+Kastrup,+Denmark&travelmode=driving&waypoints=Kenny+Drews+Vej+37,+2450+K%C3%B8benhavn,+Denmark" target="_blank">🧭 Plano B maršrutas Google Maps</a></p>
+    <p><strong>Patarimas:</strong> Kopenhagos zoologijos sodas pirmadienį, 2026-10-26, dirba 9:00–17:00, bilietas suaugusiam ~260 DKK; dramblių ir tropikų namai leidžia pasislėpti nuo lietaus.</p>
+    <p>Planas B baigiasi toje pačioje vietoje kaip ir pagrindinis planas – oro uoste, prieš skrydį į Kauną.</p>
   </details>
 </section>
 
-<section id="zemelapis">
+<section id="map">
   <h2>🗺️ Žemėlapis</h2>
-  <div class="map-placeholder">
-<!-- TRIP_MAP:START --><style>
+  <!-- TRIP_MAP:START --><style>
 #trip-map{height:440px;width:100%;border-radius:12px;margin-top:12px;z-index:0}
 .trip-map-legend{background:#fff;padding:4px 8px;border-radius:6px;font:12px sans-serif;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 .trip-map-legend span{margin-right:8px;white-space:nowrap}
 .trip-map-legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
 @media(max-width:600px){#trip-map{height:340px}}
 </style><div id="trip-map" role="region" aria-label="Kelionės žemėlapis"></div><script>(function(){
-var D={"points": [{"day": 1, "order": 1, "name": "Kopenhagos oro uostas (CPH)", "lat": 55.618, "lon": 12.6476, "time": "09:40–10:10", "url": "https://www.google.com/maps?q=55.6180,12.6476", "color": "#d7263d"}, {"day": 1, "order": 2, "name": "Apartamentai su kanalo vaizdu – įsiregistravimas (Sydhavnen)", "lat": 55.656, "lon": 12.5475, "time": "10:40–11:05", "url": "https://www.google.com/maps?q=55.6560,12.5475", "color": "#d7263d"}, {"day": 1, "order": 3, "name": "Vor Frelsers Kirke (Išganytojo bažnyčia)", "lat": 55.6725, "lon": 12.5939, "time": "11:30–12:30", "url": "https://www.google.com/maps?q=55.6725,12.5939", "color": "#d7263d"}, {"day": 1, "order": 4, "name": "Café Wilder", "lat": 55.6719, "lon": 12.592, "time": "13:00–14:00", "url": "https://www.google.com/maps?q=55.6719,12.5920", "color": "#d7263d"}, {"day": 1, "order": 5, "name": "Nyhavn", "lat": 55.6799, "lon": 12.59, "time": "14:30–15:30", "url": "https://www.google.com/maps?q=55.6799,12.5900", "color": "#d7263d"}, {"day": 1, "order": 6, "name": "Rundetårn (Apvalusis bokštas)", "lat": 55.6808, "lon": 12.5775, "time": "15:45–16:45", "url": "https://www.google.com/maps?q=55.6808,12.5775", "color": "#d7263d"}, {"day": 1, "order": 7, "name": "Torvehallerne maisto turgus", "lat": 55.6838, "lon": 12.5683, "time": "17:00–18:45", "url": "https://www.google.com/maps?q=55.6838,12.5683", "color": "#d7263d"}, {"day": 2, "order": 1, "name": "Christiania", "lat": 55.6736, "lon": 12.5983, "time": "09:20–10:00", "url": "https://www.google.com/maps?q=55.6736,12.5983", "color": "#1b998b"}, {"day": 2, "order": 2, "name": "Rosenborgo pilis", "lat": 55.6857, "lon": 12.5775, "time": "10:30–11:40", "url": "https://www.google.com/maps?q=55.6857,12.5775", "color": "#1b998b"}, {"day": 2, "order": 3, "name": "Amalienborgas", "lat": 55.684, "lon": 12.5934, "time": "12:05–12:40", "url": "https://www.google.com/maps?q=55.6840,12.5934", "color": "#1b998b"}, {"day": 2, "order": 4, "name": "Restaurant Schønnemann", "lat": 55.6799, "lon": 12.5759, "time": "13:00–14:00", "url": "https://www.google.com/maps?q=55.6799,12.5759", "color": "#1b998b"}, {"day": 2, "order": 5, "name": "SMK – Danijos nacionalinė dailės galerija", "lat": 55.6866, "lon": 12.5805, "time": "14:20–16:00", "url": "https://www.google.com/maps?q=55.6866,12.5805", "color": "#1b998b"}, {"day": 2, "order": 6, "name": "Pasiplaukiojimas kanalais (Canal Tours Copenhagen, Nyhavn prieplauka)", "lat": 55.6799, "lon": 12.59, "time": "16:20–17:20", "url": "https://www.google.com/maps?q=55.6799,12.5900", "color": "#1b998b"}, {"day": 2, "order": 7, "name": "Reffen", "lat": 55.6963, "lon": 12.6126, "time": "17:50–19:10", "url": "https://www.google.com/maps?q=55.6963,12.6126", "color": "#1b998b"}, {"day": 3, "order": 1, "name": "Christiansborgo pilis", "lat": 55.6761, "lon": 12.5789, "time": "10:00–11:30", "url": "https://www.google.com/maps?q=55.6761,12.5789", "color": "#2e86ab"}, {"day": 3, "order": 2, "name": "Ny Carlsberg Glyptotek", "lat": 55.6744, "lon": 12.5774, "time": "11:45–12:50", "url": "https://www.google.com/maps?q=55.6744,12.5774", "color": "#2e86ab"}, {"day": 3, "order": 3, "name": "Café Glyptoteket", "lat": 55.6744, "lon": 12.5774, "time": "13:00–14:00", "url": "https://www.google.com/maps?q=55.6744,12.5774", "color": "#2e86ab"}, {"day": 3, "order": 4, "name": "Tivoli", "lat": 55.6736, "lon": 12.5681, "time": "14:15–16:00", "url": "https://www.google.com/maps?q=55.6736,12.5681", "color": "#2e86ab"}, {"day": 3, "order": 5, "name": "Field's prekybos centras (vakarienė)", "lat": 55.6286, "lon": 12.5713, "time": "16:30–17:30", "url": "https://www.google.com/maps?q=55.6286,12.5713", "color": "#2e86ab"}, {"day": 3, "order": 6, "name": "Royal Arena – Deep Purple koncertas", "lat": 55.6256, "lon": 12.5726, "time": "17:45–22:30", "url": "https://www.google.com/maps?q=55.6256,12.5726", "color": "#2e86ab"}, {"day": 4, "order": 1, "name": "Frederiksberg Have (parkas)", "lat": 55.6775, "lon": 12.5236, "time": "10:00–11:15", "url": "https://www.google.com/maps?q=55.6775,12.5236", "color": "#f46036"}, {"day": 4, "order": 2, "name": "Apartamentai su kanalo vaizdu – atsiskaitymas (Sydhavnen)", "lat": 55.656, "lon": 12.5475, "time": "11:40–12:00", "url": "https://www.google.com/maps?q=55.6560,12.5475", "color": "#f46036"}, {"day": 4, "order": 3, "name": "Kopenhagos oro uostas (CPH) – registracija ir sauga", "lat": 55.618, "lon": 12.6476, "time": "12:40–13:00", "url": "https://www.google.com/maps?q=55.6180,12.6476", "color": "#f46036"}, {"day": 4, "order": 4, "name": "Pietūs oro uosto terminale", "lat": 55.618, "lon": 12.6476, "time": "13:00–14:00", "url": "https://www.google.com/maps?q=55.6180,12.6476", "color": "#f46036"}, {"day": 4, "order": 5, "name": "Išvykimo vartai – skrydis CPH→KUN", "lat": 55.618, "lon": 12.6476, "time": "14:00–15:15", "url": "https://www.google.com/maps?q=55.6180,12.6476", "color": "#f46036"}], "lines": [{"day": 1, "color": "#d7263d", "coords": [[55.618, 12.6476], [55.656, 12.5475], [55.6725, 12.5939], [55.6719, 12.592], [55.6799, 12.59], [55.6808, 12.5775], [55.6838, 12.5683]]}, {"day": 2, "color": "#1b998b", "coords": [[55.6736, 12.5983], [55.6857, 12.5775], [55.684, 12.5934], [55.6799, 12.5759], [55.6866, 12.5805], [55.6799, 12.59], [55.6963, 12.6126]]}, {"day": 3, "color": "#2e86ab", "coords": [[55.6761, 12.5789], [55.6744, 12.5774], [55.6744, 12.5774], [55.6736, 12.5681], [55.6286, 12.5713], [55.6256, 12.5726]]}, {"day": 4, "color": "#f46036", "coords": [[55.6775, 12.5236], [55.656, 12.5475], [55.618, 12.6476], [55.618, 12.6476], [55.618, 12.6476]]}]},el=document.getElementById('trip-map');
+var D={"points": [{"day": 1, "order": 1, "name": "Kopenhagos oro uostas (CPH)", "lat": 55.618, "lon": 12.6476, "time": "09:40–10:10", "url": "https://www.google.com/maps/search/?api=1&query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark", "color": "#d7263d"}, {"day": 1, "order": 2, "name": "Apartamentai su kanalo vaizdu – įsiregistravimas (Sydhavnen)", "lat": 55.656, "lon": 12.5475, "time": "10:40–11:05", "url": "https://www.google.com/maps/search/?api=1&query=Kenny%20Drews%20Vej%2037%2C%202450%20K%C3%B8benhavn%2C%20Denmark", "color": "#d7263d"}, {"day": 1, "order": 3, "name": "Vor Frelsers Kirke (Išganytojo bažnyčia)", "lat": 55.6725, "lon": 12.5939, "time": "11:30–12:30", "url": "https://www.google.com/maps/search/?api=1&query=Vor%20Frelsers%20Kirke%2C%20Copenhagen%2C%20Denmark", "color": "#d7263d"}, {"day": 1, "order": 4, "name": "Café Wilder", "lat": 55.6719, "lon": 12.592, "time": "13:00–14:00", "url": "https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Wilder%2C%20Copenhagen%2C%20Denmark", "color": "#d7263d"}, {"day": 1, "order": 5, "name": "Nyhavn", "lat": 55.6799, "lon": 12.59, "time": "14:30–15:30", "url": "https://www.google.com/maps/search/?api=1&query=Nyhavn%2C%20Copenhagen%2C%20Denmark", "color": "#d7263d"}, {"day": 1, "order": 6, "name": "Rundetårn (Apvalusis bokštas)", "lat": 55.6808, "lon": 12.5775, "time": "15:45–16:45", "url": "https://www.google.com/maps/search/?api=1&query=Rundet%C3%A5rn%2C%20Copenhagen%2C%20Denmark", "color": "#d7263d"}, {"day": 1, "order": 7, "name": "Torvehallerne maisto turgus", "lat": 55.6838, "lon": 12.5683, "time": "17:00–18:45", "url": "https://www.google.com/maps/search/?api=1&query=Torvehallerne%2C%20Copenhagen%2C%20Denmark", "color": "#d7263d"}, {"day": 2, "order": 1, "name": "Christiania", "lat": 55.6736, "lon": 12.5983, "time": "09:20–10:00", "url": "https://www.google.com/maps/search/?api=1&query=55.673600%2C12.598300", "color": "#1b998b"}, {"day": 2, "order": 2, "name": "Rosenborgo pilis", "lat": 55.6857, "lon": 12.5775, "time": "10:30–11:40", "url": "https://www.google.com/maps/search/?api=1&query=55.685700%2C12.577500", "color": "#1b998b"}, {"day": 2, "order": 3, "name": "Amalienborgas", "lat": 55.684, "lon": 12.5934, "time": "12:05–12:40", "url": "https://www.google.com/maps/search/?api=1&query=55.684000%2C12.593400", "color": "#1b998b"}, {"day": 2, "order": 4, "name": "Restaurant Schønnemann", "lat": 55.6799, "lon": 12.5759, "time": "13:00–14:00", "url": "https://www.google.com/maps/search/?api=1&query=55.679900%2C12.575900", "color": "#1b998b"}, {"day": 2, "order": 5, "name": "SMK – Danijos nacionalinė dailės galerija", "lat": 55.6866, "lon": 12.5805, "time": "14:20–16:00", "url": "https://www.google.com/maps/search/?api=1&query=55.686600%2C12.580500", "color": "#1b998b"}, {"day": 2, "order": 6, "name": "Pasiplaukiojimas kanalais (Canal Tours Copenhagen, Nyhavn prieplauka)", "lat": 55.6799, "lon": 12.59, "time": "16:20–17:20", "url": "https://www.google.com/maps/search/?api=1&query=55.679900%2C12.590000", "color": "#1b998b"}, {"day": 2, "order": 7, "name": "Reffen", "lat": 55.6963, "lon": 12.6126, "time": "17:50–19:10", "url": "https://www.google.com/maps/search/?api=1&query=55.696300%2C12.612600", "color": "#1b998b"}, {"day": 3, "order": 1, "name": "Christiansborgo pilis", "lat": 55.6761, "lon": 12.5789, "time": "10:00–11:30", "url": "https://www.google.com/maps/search/?api=1&query=55.676100%2C12.578900", "color": "#2e86ab"}, {"day": 3, "order": 2, "name": "Ny Carlsberg Glyptotek", "lat": 55.6744, "lon": 12.5774, "time": "11:45–12:50", "url": "https://www.google.com/maps/search/?api=1&query=55.674400%2C12.577400", "color": "#2e86ab"}, {"day": 3, "order": 3, "name": "Café Glyptoteket", "lat": 55.6744, "lon": 12.5774, "time": "13:00–14:00", "url": "https://www.google.com/maps/search/?api=1&query=55.674400%2C12.577400", "color": "#2e86ab"}, {"day": 3, "order": 4, "name": "Tivoli", "lat": 55.6736, "lon": 12.5681, "time": "14:15–16:00", "url": "https://www.google.com/maps/search/?api=1&query=55.673600%2C12.568100", "color": "#2e86ab"}, {"day": 3, "order": 5, "name": "Field's prekybos centras (vakarienė)", "lat": 55.6286, "lon": 12.5713, "time": "16:30–17:30", "url": "https://www.google.com/maps/search/?api=1&query=55.628600%2C12.571300", "color": "#2e86ab"}, {"day": 3, "order": 6, "name": "Royal Arena – Deep Purple koncertas", "lat": 55.6256, "lon": 12.5726, "time": "17:45–22:30", "url": "https://www.google.com/maps/search/?api=1&query=55.625600%2C12.572600", "color": "#2e86ab"}, {"day": 4, "order": 1, "name": "Frederiksberg Have (parkas)", "lat": 55.6775, "lon": 12.5236, "time": "10:00–11:15", "url": "https://www.google.com/maps/search/?api=1&query=Frederiksberg%20Have%2C%20Copenhagen%2C%20Denmark", "color": "#f46036"}, {"day": 4, "order": 2, "name": "Apartamentai su kanalo vaizdu – atsiskaitymas (Sydhavnen)", "lat": 55.656, "lon": 12.5475, "time": "11:40–12:00", "url": "https://www.google.com/maps/search/?api=1&query=Kenny%20Drews%20Vej%2037%2C%202450%20K%C3%B8benhavn%2C%20Denmark", "color": "#f46036"}, {"day": 4, "order": 3, "name": "Kopenhagos oro uostas (CPH) – registracija ir sauga", "lat": 55.618, "lon": 12.6476, "time": "12:40–13:00", "url": "https://www.google.com/maps/search/?api=1&query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark", "color": "#f46036"}, {"day": 4, "order": 4, "name": "Pietūs oro uosto terminale", "lat": 55.618, "lon": 12.6476, "time": "13:00–14:00", "url": "https://www.google.com/maps/search/?api=1&query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark", "color": "#f46036"}, {"day": 4, "order": 5, "name": "Išvykimo vartai – skrydis CPH→KUN", "lat": 55.618, "lon": 12.6476, "time": "14:00–15:15", "url": "https://www.google.com/maps/search/?api=1&query=Copenhagen%20Airport%2C%20Kastrup%2C%20Denmark", "color": "#f46036"}], "lines": [{"day": 1, "color": "#d7263d", "coords": [[55.618, 12.6476], [55.656, 12.5475], [55.6725, 12.5939], [55.6719, 12.592], [55.6799, 12.59], [55.6808, 12.5775], [55.6838, 12.5683]]}, {"day": 2, "color": "#1b998b", "coords": [[55.6736, 12.5983], [55.6857, 12.5775], [55.684, 12.5934], [55.6799, 12.5759], [55.6866, 12.5805], [55.6799, 12.59], [55.6963, 12.6126]]}, {"day": 3, "color": "#2e86ab", "coords": [[55.6761, 12.5789], [55.6744, 12.5774], [55.6744, 12.5774], [55.6736, 12.5681], [55.6286, 12.5713], [55.6256, 12.5726]]}, {"day": 4, "color": "#f46036", "coords": [[55.6775, 12.5236], [55.656, 12.5475], [55.618, 12.6476], [55.618, 12.6476], [55.618, 12.6476]]}]},el=document.getElementById('trip-map');
 function e(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 function draw(){
   var m=L.map(el,{scrollWheelZoom:false});
@@ -647,160 +841,88 @@ function load(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load);else load();
 })();</script><!-- TRIP_MAP:END -->
+</section>
+
+<section id="budget">
+  <h2>💰 Biudžetas</h2>
+  <div class="card">
+    <table class="budget-table">
+      <tr><th>Kategorija</th><th>Suma (4 keliautojams)</th><th>Pastaba</th></tr>
+      <tr><td>Skrydžiai KUN↔CPH</td><td>~572 €</td><td>Rekomenduojama pirkti kuo greičiau, kainos artėjant datai dažnai kyla</td></tr>
+      <tr><td>Nakvynė (3 naktys)</td><td>780 €</td><td>Patikrinkite tiksliai Booking.com puslapyje, ar tai bendra kaina, ar kaina už naktį</td></tr>
+      <tr><td>Maistas (4 dienos)</td><td>~712 €</td><td>Pagal šiame plane nurodytas vietas</td></tr>
+      <tr><td>Bilietai į lankytinas vietas</td><td>~640 €</td><td>Pilys, muziejai, bokštai, kanalų plaukiojimas</td></tr>
+      <tr><td>Deep Purple koncertas</td><td>380 €</td><td>95 €/asm.</td></tr>
+      <tr><td>Viešasis transportas</td><td>~150 €</td><td>Metro, autobusas, harbour bus, 4 dienos</td></tr>
+      <tr><td>Automobilio nuoma</td><td>0 €</td><td>Automobilis šioje kelionėje nenuomojamas</td></tr>
+      <tr><td><strong>Iš viso (tikėtina)</strong></td><td><strong>~3 234 €</strong></td><td>≈ 809 €/asmeniui</td></tr>
+    </table>
   </div>
 </section>
 
-<section id="oras">
-  <h2>☁️ Orų prognozė</h2>
-  <div class="card-grid">
-    <div class="food-card"><strong>1 diena · 2026-10-23 · Kopenhaga</strong><p>Dulksna. 8,8–11,9°C. Lietaus tikimybė 59%. Vėjas iki 25,6 km/h.</p></div>
-    <div class="food-card"><strong>2 diena · 2026-10-24 · Kopenhaga</strong><p>Dulksna. 10,5–11,9°C. Lietaus tikimybė 55%. Vėjas iki 45,2 km/h — gana vėjuota, apsirenkite atitinkamai.</p></div>
-    <div class="food-card"><strong>3 diena · 2026-10-25 · Kopenhaga</strong><p>Lietus. 8,8–10,9°C. Lietaus tikimybė 69%. Vėjas iki 49,2 km/h — stipriausias vėjas ir lietus per visą kelionę.</p></div>
-    <div class="food-card"><strong>4 diena · 2026-10-26 · Kaunas</strong><p>Dulksna. 9,0–12,8°C. Lietaus tikimybė 42%. Vėjas iki 42,1 km/h.</p></div>
-  </div>
-</section>
-
-<section id="maistas">
-  <h2>🍽️ Kur pavalgyti</h2>
-
-  <h3>1 diena</h3>
-  <div class="food-grid">
-    <div class="food-card"><strong>Café Wilder</strong><br>Netoli: Café Wilder (Christianshavn) · prancūziškas-daniškas bistro · ~20 €/žm.<p>Jaukus Christianshavn kampelis su sezoniniu meniu – geras pirmas įspūdis apie vietinę virtuvę, patiekalai kaip stegt flæsk ar smørrebrød dažnai meniuje.</p><a href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Wilder%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-    <div class="food-card"><strong>Hallernes Smørrebrød (Torvehallerne)</strong><br>Netoli: Torvehallerne maisto turgus · smørrebrød prekystalis · ~13 €/žm.<p>Vienas geriausiai vertinamų smørrebrød prekystalių turguje – šviežiai gaminami tradiciniai sumuštiniai su žuvimi ar mėsa.</p><a href="https://www.google.com/maps/search/?api=1&query=Hallernes%20Sm%C3%B8rrebr%C3%B8d%20%28Torvehallerne%29%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-    <div class="food-card"><strong>Teglværket</strong><br>Netoli: Apartamentai su kanalo vaizdu (Sydhavnen) · maisto erdvė su uosto vaizdu · ~16 €/žm.<p>Pora minučių pėsčiomis nuo apartamentų – kasdieninė vakarienės vieta su vaizdu į vandenį, kai nesinori toli keliauti po pilnos dienos.</p><a href="https://www.google.com/maps/search/?api=1&query=Teglv%C3%A6rket%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-  </div>
-
-  <h3>2 diena</h3>
-  <div class="food-grid">
-    <div class="food-card"><strong>Restaurant Schønnemann</strong><br>Netoli: Restaurant Schønnemann (Indre By) · klasikinis smørrebrød restoranas · ~27 €/žm.<p>Vienas seniausių ir geriausiai vertinamų smørrebrød restoranų mieste, veikiantis nuo 1877 m. – tikras klasikinis danų pietų patiekalas.</p><a href="https://www.google.com/maps/search/?api=1&query=Restaurant%20Sch%C3%B8nnemann%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-    <div class="food-card"><strong>Domhusets Smørrebrød</strong><br>Netoli: Rosenborgo pilis / senamiesčio maršrutas · nedidelis smørrebrød prekystalis · ~11 €/žm.<p>Pigesnė alternatyva tarp Rosenborgo ir Amalienborgo – gražiai pateikti tradiciniai sumuštiniai už prieinamą kainą, galima valgyti ant suoliuko prie kanalo.</p><a href="https://www.google.com/maps/search/?api=1&query=Domhusets%20Sm%C3%B8rrebr%C3%B8d%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-    <div class="food-card"><strong>Reffen</strong><br>Netoli: Reffen · gatvės maisto parkas · ~15 €/žm.<p>Didžiausias gatvės maisto parkas prie vandens – šalia tarptautinių prekystalių rasite ir danų klasiką (frikadeller, flæskesteg, pølse).</p><a href="https://www.google.com/maps/search/?api=1&query=Reffen%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-  </div>
-
-  <h3>3 diena</h3>
-  <div class="food-grid">
-    <div class="food-card"><strong>Café Glyptoteket</strong><br>Netoli: Ny Carlsberg Glyptotek · muziejaus kavinė · ~18 €/žm.<p>Pietūs tiesiog muziejaus žiemos sode tarp palmių – rami ir netikėta vieta, patogu nereikia niekur eiti.</p><a href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Glyptoteket%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-    <div class="food-card"><strong>Field's maisto erdvė</strong><br>Netoli: Field's prekybos centras (vakarienė) · prekybos centro maisto prekystaliai · ~14 €/žm.<p>Greita ir pigi vakarienė prieš koncertą, čia pat prie Ørestado metro stotelės – patogu, nes laiko mažai.</p><a href="https://www.google.com/maps/search/?api=1&query=Field%27s%20maisto%20erdv%C4%97%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-  </div>
-
-  <h3>4 diena</h3>
-  <div class="food-grid">
-    <div class="food-card"><strong>Lagkagehuset (CPH oro uostas)</strong><br>Netoli: Kopenhagos oro uostas (CPH) / Pietūs oro uosto terminale · daniška kepykla-kavinė · ~9 €/žm.<p>Populiariausia Danijos kepyklų tinklo kavinė oro uoste – paskutinė galimybė paragauti tikro daniško wienerbrød prieš skrydį.</p><a href="https://www.google.com/maps/search/?api=1&query=Lagkagehuset%20%28CPH%20oro%20uostas%29%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-  </div>
-
-  <h3 style="margin-top:22px;">🍸 Barai</h3>
-  <div class="food-grid">
-    <div class="food-card"><strong>Hviids Vinstue</strong> (1 diena)<br>Netoli: Nyhavn<p>Seniausias nenutrūkstamai veikiantis baras Kopenhagoje – veikia tame pačiame rūsyje nuo 1723 m. prie Kongens Nytorv, vos kelios minutės nuo Nyhavn. Žvakėmis apšviestos senosios salės, istoriniai interjerai ir griežta taisyklė – jokios muzikos, tik pokalbiai.</p><a href="https://www.google.com/maps/search/?api=1&query=Hviids%20Vinstue%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-    <div class="food-card"><strong>Café Nemoland</strong> (2 diena)<br>Netoli: Christiania<p>Christianijos savivaldžios bendruomenės socialinis centras lauko terasoje – unikali, niekur kitur Europoje nepakartojama atmosfera, verta užsukti bent trumpam pažiūrėti, net jei ne gerti.</p><a href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Nemoland%2C%20Kopenhaga" target="_blank">Žemėlapyje</a></div>
-  </div>
-
-  <h3 style="margin-top:28px;">🍴 Ką paragauti</h3>
-  <div class="card-grid">
-    <div class="dish-card">
-      <img class="spot-thumb" src="images/atviri-sumu-tiniai-sm-rrebr-d-ad36844c.jpg" alt="Smørrebrød">
-      <p class="credit">Nuotrauka: Kritzolina, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Sm%C3%B8rrebr%C3%B8d_in_Copenhagen_01.jpg" target="_blank">šaltinis</a></p>
-      <h4>Smørrebrød</h4>
-      <p>Rupios ruginės duonos riekelė, apkrauta sviestu ir gausiu priedu – silke, krevetėmis, kiaušiniu ar mėsa. Danijos nacionalinis pietų patiekalas, valgomas šakute ir peiliu.</p>
-      <p><strong>Kaina:</strong> 8–27 € · <strong>Kur paragauti:</strong> Restaurant Schønnemann, Hallernes Smørrebrød (Torvehallerne), Domhusets Smørrebrød</p>
-    </div>
-    <div class="dish-card">
-      <img class="spot-thumb" src="images/keptas-kiaulienos-pjausnys-su-petra-oli-pada-u-d708c98e.jpg" alt="Stegt flæsk">
-      <p class="credit">Nuotrauka: XYZA-2400, CC0, <a href="https://commons.wikimedia.org/wiki/File:Stegt_fl%C3%A6sk_tilberedt_med_r%C3%B8get_bacon,_nye_danske_kartofler_og_persillesovs._Foto_Hans_Christian_Hansen.jpg" target="_blank">šaltinis</a></p>
-      <h4>Keptas kiaulienos pjausnys su petražolių padažu (stegt flæsk med persillesovs)</h4>
-      <p>Traškiai apkeptos kiaulienos riekelės su virtomis bulvėmis ir baltu petražolių padažu – balsavimu išrinktas Danijos nacionalinis patiekalas.</p>
-      <p><strong>Kaina:</strong> 15–24 € · <strong>Kur paragauti:</strong> Café Wilder, Restaurant Schønnemann</p>
-    </div>
-    <div class="dish-card">
-      <img class="spot-thumb" src="images/dan-kotletai-frikadeller-9e606cdd.jpg" alt="Frikadeller">
-      <p class="credit">Nuotrauka: cyclonebill, CC BY-SA 2.0, <a href="https://commons.wikimedia.org/wiki/File:Flickr_-_cyclonebill_-_Frikadeller_med_ristet_rugbr%C3%B8d_og_cornichons.jpg" target="_blank">šaltinis</a></p>
-      <h4>Danų kotletai (frikadeller)</h4>
-      <p>Keptos kiaulienos ir jautienos faršo kotletelės, tradiciškai patiekiamos su virtomis bulvėmis, raudonųjų kopūstų salotomis arba ant ruginės duonos.</p>
-      <p><strong>Kaina:</strong> 10–18 € · <strong>Kur paragauti:</strong> Reffen, Café Wilder</p>
-    </div>
-    <div class="dish-card">
-      <img class="spot-thumb" src="images/keptas-kiaulienos-sprandin-su-tra-kia-odele-b8c80393.jpg" alt="Flæskesteg">
-      <p class="credit">Nuotrauka: fru_green, CC BY-SA 2.0, <a href="https://commons.wikimedia.org/wiki/File:Flaeskesteg_med_svaer.jpg" target="_blank">šaltinis</a></p>
-      <h4>Keptas kiaulienos sprandinė su traškia odele (flæskesteg med svær)</h4>
-      <p>Kepta kiaulienos sprandinė su ypač traškia skrudinta odele – mėgstamiausias danų šventinis patiekalas, dažnas ir rudens maisto turguose.</p>
-      <p><strong>Kaina:</strong> 12–20 € · <strong>Kur paragauti:</strong> Reffen</p>
-    </div>
-    <div class="dish-card">
-      <img class="spot-thumb" src="images/dan-s-rio-te-los-kepinys-wienerbr-d-c2d2dda0.jpg" alt="Wienerbrød">
-      <p class="credit">Nuotrauka: Peter Isotalo, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/wiki/File:Glazed_apple_Danish.jpg" target="_blank">šaltinis</a></p>
-      <h4>Danų sūrio tešlos kepinys (wienerbrød)</h4>
-      <p>Lapuotos mielinės tešlos kepinys su vaisių ar migdolų įdaru – danų versija austriško Danish pastry, puikus pusryčiams ar užkandžiui su kava.</p>
-      <p><strong>Kaina:</strong> 3–6 € · <strong>Kur paragauti:</strong> Lagkagehuset (CPH oro uostas), Hallernes Smørrebrød (Torvehallerne)</p>
-    </div>
-    <div class="dish-card">
-      <img class="spot-thumb" src="images/silk-ant-rugin-s-duonos-f7dc6724.jpg" alt="Sild">
-      <p class="credit">Nuotrauka: Flickr user cyclonebill, CC BY-SA 2.0, <a href="https://commons.wikimedia.org/wiki/File:Sild.jpg" target="_blank">šaltinis</a></p>
-      <h4>Silkė ant ruginės duonos (sild på rugbrød)</h4>
-      <p>Marinuota silkė (krienų, kario ar actinio marinato skoniu) ant sviestuotos ruginės duonos – klasikinis smørrebrød priedas ir geras įvadas į danų skonius.</p>
-      <p><strong>Kaina:</strong> 9–16 € · <strong>Kur paragauti:</strong> Restaurant Schønnemann, Hallernes Smørrebrød (Torvehallerne)</p>
-    </div>
-    <div class="dish-card">
-      <img class="spot-thumb" src="images/dan-de-rel-i-vagon-lio-p-lsevogn-2791e27c.jpg" alt="Pølse">
-      <p class="credit">Nuotrauka: Ian Watson, CC0, <a href="https://commons.wikimedia.org/wiki/File:P%C3%B8lsevogn_(hot_dog_stand)_in_Copenhagen,_1988.jpg" target="_blank">šaltinis</a></p>
-      <h4>Danų dešrelė iš vagonėlio (pølse/pølsevogn)</h4>
-      <p>Klasikinė danų gatvės dešrelė iš mobilaus vagonėlio – su remuladu, svogūnais ir krupkom – greitas ir pigus užkandis bet kurioje miesto vietoje.</p>
-      <p><strong>Kaina:</strong> 4–8 € · <strong>Kur paragauti:</strong> Reffen, Field's maisto erdvė</p>
-    </div>
-  </div>
-</section>
-
-<section id="biudzetas">
-  <h2>💶 Biudžeto suvestinė</h2>
-  <p>Kopenhaga, 2026-10-23 → 2026-10-26 (3 naktys, 4 keliautojai). Automobilis nenuomojamas, todėl degalų ir automobilio nuomos eilučių nėra.</p>
-  <table class="budget-table">
-    <tr><th>Kategorija</th><th>Min</th><th>Tikėtina</th><th>Max</th></tr>
-    <tr><td>✈️ Skrydžiai (KUN↔CPH, 4 žm.)</td><td>356 €</td><td>520 €</td><td>579 €</td></tr>
-    <tr><td>🚗 Automobilio nuoma</td><td>0 €</td><td>0 €</td><td>0 €</td></tr>
-    <tr><td>🏠 Nakvynė (butas, 3 nakt.)</td><td>780 €</td><td>780 €</td><td>900 €</td></tr>
-    <tr><td>🍽️ Maistas (4 žm. × 4 d.)</td><td>572 €</td><td>650 €</td><td>750 €</td></tr>
-    <tr><td>🎟️ Bilietai į objektus</td><td>850 €</td><td>940 €</td><td>1 030 €</td></tr>
-    <tr><td>⛽ Kuras</td><td>0 €</td><td>0 €</td><td>0 €</td></tr>
-    <tr><th>IŠ VISO (4 žm.)</th><th>2 558 €</th><th>2 890 €</th><th>3 259 €</th></tr>
-    <tr><th>Vienam žmogui</th><th>640 €</th><th>723 €</th><th>815 €</th></tr>
-  </table>
-  <details>
-    <summary>Detalės</summary>
-    <p><strong>Skrydžiai:</strong> Kiwi.com paieška 2026-10-20, Ryanair FR6156/FR6155, atvykimas 2026-10-23 09:40 CPH / išvykimas 2026-10-26 15:15 CPH, 4 suaugę – 520 € tiksliems plano laikams (356–579 € intervale, priklausomai nuo laiko). Jei bilietai jau pirkti anksčiau kita kaina, ta kaina ir galioja.</p>
-    <p><strong>Nakvynė:</strong> 780 € už visą butą 3 naktims (≈260 €/naktį).</p>
-    <p><strong>Maistas (vidutiniškai/žm.):</strong> 1 d. ≈49 €, 2 d. ≈53 €, 3 d. ≈32 €, 4 d. ≈9 € → 143 €/žm. × 4 = 572 € + ~80–180 € buferis pusryčiams/kavai/užkandžiams apartamentuose.</p>
-    <p><strong>Bilietai:</strong> Deep Purple koncertas – 380 € (95 €/žm. × 4). Likę objektai (bokštai, pilys, muziejai, kanalų kelionė, Tivoli) ≈1050 DKK/žm. ≈141 €/žm. × 4 ≈563 €.</p>
-  </details>
-</section>
-
-<section id="info">
+<section id="practical">
   <h2>ℹ️ Praktinė informacija</h2>
-  <div class="practical-card">
-    <ul class="practical-list">
-      <li><strong>Dokumentai:</strong> pakanka galiojančio paso ar asmens tapatybės kortelės – Danija yra Šengeno šalis, ES piliečiams viza nereikalinga.</li>
-      <li><strong>Pinigai ir kortelės:</strong> Danijos kronos (DKK), ne euras. Kortelės priimamos beveik visur, net mažoms pirkmėms, bet verta turėti ir grynųjų – Christianijoje bankomatų trūksta, kai kurie maži prekystaliai gali nepriimti kortelės.</li>
-      <li><strong>Arbatpinigiai:</strong> neprivalomi, paslaugos mokestis dažniausiai įskaičiuotas į sąskaitą. Galima apvalinti arba palikti ~10% už išskirtinį aptarnavimą.</li>
-      <li><strong>Sveikata:</strong> pasiimkite Europos sveikatos draudimo kortelę (EHIC) – ES piliečiams nemokamas ar pigesnis skubios pagalbos gydymas.</li>
-      <li><strong>Pagalbos numeris:</strong> 112 (policija/gaisrinė/greitoji, nemokamas skambutis). Nemedicininės konsultacijos: 1813.</li>
-      <li><strong>Viešasis transportas:</strong> bilietai per „Rejsebillet“ programėlę ar stotelės automatą, arba City Pass intensyviam lankymui.</li>
-      <li><strong>Papročiai:</strong> danai vertina punktualumą, eilių laikymąsi ir asmeninę erdvę. Dviračių takai (cykelsti) – niekada neikite jais pėsčiomis.</li>
-      <li><strong>Saugumas:</strong> Kopenhaga yra labai saugus miestas, bet saugokite daiktus turistų pilnose vietose (Nyhavn, Strøget). Christianija saugi dieną, vakare venkite, Pusher Street zonoje nuotraukų nedarykite.</li>
+  <div class="card practical-card">
+    <ul class="plain">
+      <li><strong>Dokumentai:</strong> galiojantis pasas ar asmens tapatybės kortelė – Danija yra Šengeno erdvėje, vizos ES piliečiams nereikia.</li>
+      <li><strong>Valiuta:</strong> Danijos krona (DKK), ne euras. Kortelės priimamos beveik visur, net smulkiems pirkiniams – vis dėlto turėkite šiek tiek grynųjų Christianijai (ten bankomatų mažai) ir mažiems gatvės prekystaliams.</li>
+      <li><strong>Arbatpinigiai:</strong> neprivalomi – aptarnavimas įskaičiuotas į sąskaitą. Galima apvalinti sumą arba palikti ~10 % tik už išskirtinį aptarnavimą.</li>
+      <li><strong>Sveikata:</strong> pasiimkite EHIC (Europos sveikatos draudimo kortelę) – nemokamas ar sumažintas gydymas ES piliečiams.</li>
+      <li><strong>Avarinis numeris:</strong> 112 (policija, gaisrinė, greitoji, nemokamas skambutis). Nemedicininė konsultacija: 1813 (kalbama angliškai).</li>
+      <li><strong>Viešojo transporto bilietai:</strong> pirkite „Rejsebillet" programėlėje arba automate stotyje; intensyviai lankant miestą gali apsimokėti 24 val. City Pass.</li>
+      <li><strong>Papročiai:</strong> danai vertina punktualumą ir eilių laikymąsi. Dviračių takai (cykelsti) – rimtas dalykas, niekada neikite jais pėsčiomis.</li>
+      <li><strong>Sauga:</strong> Kopenhaga apskritai labai saugi; įprastas budrumas turistinėse vietose (Nyhavn, Strøget). Christiania saugu dienos metu, vakare venkite, Pusher Street zonoje nuotraukų nedarykite.</li>
     </ul>
   </div>
 
-  <div class="practical-card" style="margin-top:14px;">
-    <h3 style="margin-top:0;">Skrydžių ir kitos detalės</h3>
-    <ul class="practical-list">
-      <li><strong>Skrydis KUN → CPH:</strong> atvykimas 2026-10-23, 09:40.</li>
-      <li><strong>Skrydis CPH → KUN:</strong> išvykimas 2026-10-26, 15:15, atvykimas Kaune 17:45.</li>
-      <li><strong>Automobilio nuoma:</strong> nereikalinga šioje kelionėje.</li>
-      <li><strong>Kelionės organizatorius / kontaktas:</strong> [įrašykite vardą ir telefono numerį]</li>
-      <li><strong>Nenumatytų atvejų kontaktas Lietuvoje:</strong> [įrašykite vardą ir telefono numerį]</li>
+  <div class="tips-box">
+    <strong>Praktiniai patarimai kelionei:</strong>
+    <ul>
+      <li>Apartamentai įsikūrę Sydhavnen rajone, kiek toliau nuo senamiesčio ir Christianshavn -- kelias į visas lankytinas vietas ir oro uostą patogus ir asfaltuotas, tačiau skirkite papildomai 10-15 minučių kelionei autobusu, traukiniu ar metro.</li>
+      <li>Iš oro uosto į apartamentus Sydhavnen rajone patogiausia važiuoti taksi arba autobusu/traukiniu su persėdimu -- tiesioginio metro iki šio rajono nėra.</li>
+      <li>Šeštadienį po pasiplaukiojimo kanalais patogiausia iki Reffen plaukti Havnebusu tiesiai nuo Nyhavno prieplaukos -- galioja tas pats bilietas kaip autobusui ar metro.</li>
+      <li>Po šeštadienio Deep Purple koncerto Royal Arenoje (baigiasi apie 22:30) grįžtant į Sydhavnen, iš anksto pasitikrinkite vakarinio S-traukinio ar autobuso tvarkaraštį.</li>
+      <li>Naktį iš šeštadienio į sekmadienį (spalio 24/25-osios naktis) laikrodžiai pasukami į žiemos laiką -- naktis bus viena valanda ilgesnė, patikrinkite, ar telefonas atsinaujina automatiškai.</li>
+      <li>Pirmadienį dauguma Kopenhagos muziejų (tarp jų Nationalmuseet) uždaryti -- ryto pasivaikščiojimui pasirinktas Frederiksberg Have parkas visada atviras ir nemokamas.</li>
+      <li>Paskutinę dieną į oro uostą atvykstama apie 2,5 val. prieš skrydį -- registracijai, bagažo pridavimui ir pietums laiko pakanka.</li>
     </ul>
   </div>
 </section>
 
-<section id="paimti">
+<section id="forecast">
+  <h2>☁️ Orų prognozė</h2>
+  <div class="card">
+    <div class="forecast-day">
+      <span><strong>1 d. · 2026-10-23</strong> · Kopenhaga</span>
+      <span>Dulksna</span>
+      <span class="temp">8–12°C</span>
+      <span>🌧 59% · 💨 20 km/h</span>
+    </div>
+    <div class="forecast-day">
+      <span><strong>2 d. · 2026-10-24</strong> · Kopenhaga</span>
+      <span>Dulksna</span>
+      <span class="temp">10–11°C</span>
+      <span>🌧 55% · 💨 46 km/h</span>
+    </div>
+    <div class="forecast-day">
+      <span><strong>3 d. · 2026-10-25</strong> · Kopenhaga</span>
+      <span>Dulksna</span>
+      <span class="temp">9–11°C</span>
+      <span>🌧 69% · 💨 43 km/h</span>
+    </div>
+    <div class="forecast-day">
+      <span><strong>4 d. · 2026-10-26</strong> · Kaunas</span>
+      <span>Dulksna</span>
+      <span class="temp">10–11°C</span>
+      <span>🌧 42% · 💨 29 km/h</span>
+    </div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem;">Tikslesnė prognozė atsinaujins artėjant kelionei – šios reikšmės jau rodo tikėtiną orą visoms keturioms dienoms.</p>
+  </div>
+</section>
+
+<section id="packing">
   <h2>🎒 Ką pasiimti</h2>
-<!-- PACKING_LIST:START --><style>
+  <!-- PACKING_LIST:START --><style>
 .packing-list{margin:8px 0}
 .packing-list .pk-meta{opacity:.8;margin:0 0 8px}
 .packing-list .pk-tips{margin:0 0 12px;padding-left:18px}
@@ -813,7 +935,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 .packing-list .pk-note{display:block;font-size:.85em;opacity:.75}
 .packing-list .pk-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:6px 0 10px;font-size:.9em}
 .packing-list .pk-reset{font:inherit;padding:4px 10px;border-radius:6px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer}
-</style><div class="packing-list" id="packing-list" data-key="packing:ai-trip-danija-kopenhaga-roundtrip:"><p class="pk-meta">Tik rankinis bagažas (~10 kg/asmeniui) – skrydžiai KUN–CPH–KUN, automobilis nenuomojamas, viskas pritaikyta keliavimui pėsčiomis/viešuoju transportu.</p><ul class="pk-tips"><li>Lietaus tikimybė 55-69% ir vėjas iki ~49 km/h 2-3 dieną – vandeniui atspari striukė svarbiau nei skėtis.</li><li>Skysčių taisyklė rankiniam bagažui: talpyklos iki 100 ml, visos sudėtos į vieną 1 l permatomą maišelį.</li><li>Danijos elektros kištukai tokie patys kaip Lietuvoje (C/E tipas, 230V) – adapterio nereikia.</li><li>Naktį iš šeštadienio į sekmadienį (10-25) laikrodžiai keliami į žiemos laiką – telefonas atsinaujina automatiškai.</li><li>Daug lankytinų objektų lauke (Nyhavn, Christiania, parkai) – apsirenkite sluoksniais, kad lengvai prisitaikytumėte prie oro.</li></ul><div class="pk-bar"><span>Supakuota: <b class="pk-count"></b></span><button type="button" class="pk-reset">Išvalyti žymes</button></div><h4 class="pk-cat">Drabužiai</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="4e72ed4c7f"><span>Neperšlampama striukė su gobtuvu<span class="pk-note">lietaus tikimybė 55-69% visas 3 dienas</span></span></label></li><li><label><input type="checkbox" data-id="4cb10b15a0"><span>Šiltas vidinis sluoksnis (flisas/megztinis)<span class="pk-note">temperatūra 8-13°C</span></span></label></li><li><label><input type="checkbox" data-id="f329c30dca"><span>2-3 marškinėliai/palaidinukės sluoksniavimui<span class="pk-note">lengva prisitaikyti prie temperatūros</span></span></label></li><li><label><input type="checkbox" data-id="e23ca85e92"><span>Vandeniui atsparūs/patogūs batai<span class="pk-note">Nyhavno, Christianshavn grindinys, daug ėjimo pėsčiomis</span></span></label></li><li><label><input type="checkbox" data-id="4ea63cba03"><span>Kepurė ar snapelis nuo lietaus</span></label></li><li><label><input type="checkbox" data-id="4dd94d2f63"><span>Šalikas ir pirštinės<span class="pk-note">vėjas iki 45-49 km/h 2-3 dieną</span></span></label></li><li><label><input type="checkbox" data-id="6507ac6f1e"><span>Vienas tvarkingesnis komplektas koncertui/vakarienei<span class="pk-note">Deep Purple koncertas 10-25 vakare</span></span></label></li><li><label><input type="checkbox" data-id="7d212e55c9"><span>Pižama, apatinis, kojinės 4 dienoms</span></label></li></ul><h4 class="pk-cat">Dokumentai ir pinigai</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="38c298cce7"><span>Asmens tapatybės kortelė arba pasas<span class="pk-note">visiems 4 keliautojams</span></span></label></li><li><label><input type="checkbox" data-id="7c10ee9283"><span>Skrydžių e-bilietai (KUN-CPH, CPH-KUN)<span class="pk-note">telefone ir atspausdinti kaip atsarga</span></span></label></li><li><label><input type="checkbox" data-id="88e27ba8b3"><span>Deep Purple koncerto bilietai<span class="pk-note">10-25 Royal Arena</span></span></label></li><li><label><input type="checkbox" data-id="b5df0fa4e0"><span>Apartamentų užsakymo patvirtinimas<span class="pk-note">Saint-Nice 1-Bdr Apt, Kenny Drews Vej 31</span></span></label></li><li><label><input type="checkbox" data-id="cb942683ab"><span>Europos sveikatos draudimo kortelė arba kelionės draudimas</span></label></li><li><label><input type="checkbox" data-id="c14e1ecc22"><span>Mokėjimo kortelė<span class="pk-note">Danijoje daug vietų priima tik kortelę</span></span></label></li><li><label><input type="checkbox" data-id="858e5bec59"><span>Nedidelė suma grynųjų DKK<span class="pk-note">smulkiems pirkiniams, jei kortelė neveiktų</span></span></label></li></ul><h4 class="pk-cat">Elektronika</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="bca9bed7b6"><span>Telefono įkroviklis<span class="pk-note">Danijoje toks pat kištukas kaip Lietuvoje – adapteris nereikalingas</span></span></label></li><li><label><input type="checkbox" data-id="cdaa51db88"><span>Nešiojama baterija (power bank)<span class="pk-note">ilgos dienos su navigacija ir bilietų app</span></span></label></li><li><label><input type="checkbox" data-id="f7d99d4366"><span>Ausinukės<span class="pk-note">skrydžiui ir kelionei</span></span></label></li></ul><h4 class="pk-cat">Kelionės reikmenys</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="500e09929a"><span>Kompaktiškas skėtis<span class="pk-note">atsarga greta striukės, bet vėjuota – geriau kapišonas</span></span></label></li><li><label><input type="checkbox" data-id="d73c3b55c0"><span>Nedidelis kuprinėlė dienos žygiams<span class="pk-note">metro bilietams, vandens buteliui, suvenyrams</span></span></label></li><li><label><input type="checkbox" data-id="ed4d500cf0"><span>Tuščias vandens butelis<span class="pk-note">pripildomas kelionėje</span></span></label></li><li><label><input type="checkbox" data-id="ed63e98945"><span>Rejsekort/Rejsebillet app arba atsiskaitymo kortelė viešajam transportui<span class="pk-note">miesto keliavimui metro/busu/laivu</span></span></label></li><li><label><input type="checkbox" data-id="4155c94d8c"><span>Žemėlapiai/maršrutai atsisiųsti neprisijungus<span class="pk-note">Rejseplanen ir Google Maps offline</span></span></label></li><li><label><input type="checkbox" data-id="15765f8aaa"><span>Ausų kamšteliai<span class="pk-note">koncertui Royal Arena</span></span></label></li></ul><h4 class="pk-cat">Higienos priemonės</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="f981aa91ab"><span>Kelioniniai buteliukai (šampūnas, dušo želė, kremas)<span class="pk-note">kiekvienas ≤100 ml, visi viename 1 l maišelyje</span></span></label></li><li><label><input type="checkbox" data-id="944843870b"><span>Dantų šepetėlis ir pasta</span></label></li><li><label><input type="checkbox" data-id="e7b3e438ef"><span>Asmeniniai vaistai<span class="pk-note">su recepto kopija, jei reikia</span></span></label></li><li><label><input type="checkbox" data-id="14f87dc3e4"><span>Skausmą/peršalimą malšinantys vaistai<span class="pk-note">ilgos ėjimo dienos lietuje</span></span></label></li></ul></div><script>
+</style><div class="packing-list" id="packing-list" data-key="packing:ai-trip-danija-kopenhaga-roundtrip:"><p class="pk-meta">Tik rankinis bagažas (be registruoto bagažo) – vienas lagaminėlis/kuprinė iki ~10 kg kiekvienam, skysčiai talpyklose ne didesnėse nei 100 ml, visi sudėti į vieną 1 l permatomą maišelį. Automobilio nuomos nėra – viskas pritaikyta vaikščiojimui ir viešajam transportui.</p><ul class="pk-tips"><li>Skysčiai rankiniame bagaže – tik iki 100 ml talpyklose, visi vienoje 1 l permatomoje pakuotėje, nes lagaminų registruoti neplanuojama.</li><li>Lietaus tikimybė 55–69% kiekvieną dieną – rinktis vandeniui atsparią striukę ir batus, o ne tik lietpaltį, nes bus daug vaikščiojimo tarp objektų.</li><li>Danijos valiuta – Danijos krona (DKK), ne euras; kortelė tinka beveik visur, grynieji tik smulkmenoms.</li><li>Visoms kelionėms mieste naudojamas vienas bilietas (metro/autobusas/Havnebus) per DOT/Rejseplanen programėlę arba &#x27;Rejsebillet&#x27; – patogiau nei pirkti popierinius bilietus.</li><li>10-25 naktį laikrodžiai persukami į žiemos laiką – telefonas atsinaujina automatiškai, bet patikrinti prieš kelionę į oro uostą.</li></ul><div class="pk-bar"><span>Supakuota: <b class="pk-count"></b></span><button type="button" class="pk-reset">Išvalyti žymes</button></div><h4 class="pk-cat">Dokumentai ir pinigai</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="38c298cce7"><span>Asmens tapatybės kortelė arba pasas<span class="pk-note">ES/Šengeno šalys, bet oro uoste būtinas galiojantis dokumentas</span></span></label></li><li><label><input type="checkbox" data-id="5ff62dbfdb"><span>Skrydžių bilietai / registracijos QR kodai<span class="pk-note">KUN→CPH 10-23 09:10 ir CPH→KUN 10-26 15:15</span></span></label></li><li><label><input type="checkbox" data-id="5e5b9fb8b7"><span>Apartamentų rezervacijos patvirtinimas<span class="pk-note">Saint-Nice 1-Bdr Apt, Kenny Drews Vej 37 (Sydhavnen)</span></span></label></li><li><label><input type="checkbox" data-id="f0e163e9a3"><span>Koncerto bilietai (Deep Purple, Royal Arena)<span class="pk-note">telefone + ekrano nuotrauka atsarginė kopija, 10-25 vakare</span></span></label></li><li><label><input type="checkbox" data-id="a1f2b6d3c2"><span>Kelionės/sveikatos draudimo polisas<span class="pk-note">kopija telefone ir popierinė</span></span></label></li><li><label><input type="checkbox" data-id="811e32ac27"><span>Mokėjimo kortelė (kontaktinė)<span class="pk-note">Danijoje valiuta DKK, ne euras – dauguma vietų bekontaktės</span></span></label></li><li><label><input type="checkbox" data-id="858e5bec59"><span>Nedidelė suma grynųjų DKK<span class="pk-note">smulkioms išlaidoms, turgus, WC</span></span></label></li><li><label><input type="checkbox" data-id="3b9856d69c"><span>Telefonas su DOT/Rejseplanen programėle<span class="pk-note">metro, autobusų ir Havnebus bilietams</span></span></label></li></ul><h4 class="pk-cat">Drabužiai (vėsa, lietus, vėjas 7–12°C)</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="bf4a90c92c"><span>Neperšlampama, vėjui atspari striukė su gobtuvu<span class="pk-note">lietaus tikimybė 55–69% visas dienas</span></span></label></li><li><label><input type="checkbox" data-id="a97c8ba133"><span>Šiltas fliso ar megztas vidinis sluoksnis<span class="pk-note">rengtis sluoksniais, 2 vnt.</span></span></label></li><li><label><input type="checkbox" data-id="9b9deea1e4"><span>Ilgos kelnės<span class="pk-note">2–3 poros 4 dienoms</span></span></label></li><li><label><input type="checkbox" data-id="b490a3fb80"><span>Šiltos kojinės<span class="pk-note">kelioms dienoms + atsargos</span></span></label></li><li><label><input type="checkbox" data-id="39904869cd"><span>Kepurė/beanie ir pirštinės<span class="pk-note">vėjas iki 46 km/h 2-ą dieną</span></span></label></li><li><label><input type="checkbox" data-id="445992aa4b"><span>Šalikas ar snoodas</span></label></li><li><label><input type="checkbox" data-id="26c3bad19a"><span>Tvarkingesnis šiltas rinkinys koncerto vakarui<span class="pk-note">laukimas eilėje lauke prie Royal Arena</span></span></label></li><li><label><input type="checkbox" data-id="7ca26f30fa"><span>Apatinis trikotažas<span class="pk-note">pagal dienų skaičių</span></span></label></li></ul><h4 class="pk-cat">Avalynė</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="8180eb6f57"><span>Patogūs, neperšlampami vaikščiojimo batai<span class="pk-note">senamiesčio grindinys, daug vaikščiojimo kasdien</span></span></label></li><li><label><input type="checkbox" data-id="be000fb208"><span>Atsarginės kojinės<span class="pk-note">jei sušlaps lietuje</span></span></label></li></ul><h4 class="pk-cat">Miestui ir viešajam transportui</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="fda579af18"><span>Kompaktiškas, vėjui atsparus skėtis<span class="pk-note">didelė lietaus tikimybė visas dienas</span></span></label></li><li><label><input type="checkbox" data-id="806c5eeb5f"><span>Nedidelė dienos kuprinė<span class="pk-note">vandeniui atspari, bilietams/vandeniui/užkandžiams</span></span></label></li><li><label><input type="checkbox" data-id="a90ab5fb94"><span>Rankinė/krepšys su uždaromu užtrauktuku<span class="pk-note">turistinėse vietose (Nyhavn, Christiania) saugoti daiktus</span></span></label></li><li><label><input type="checkbox" data-id="ed768a4028"><span>Ausų kamšteliai koncertui<span class="pk-note">Royal Arena, garsi roko muzika</span></span></label></li></ul><h4 class="pk-cat">Higiena ir vaistai</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="564a47169c"><span>Kelioninės talpyklos (≤100 ml) higienos priemonėms<span class="pk-note">vienas 1 l maišelis vežimuisi į kabiną</span></span></label></li><li><label><input type="checkbox" data-id="1ac3bd9a67"><span>Dantų šepetėlis, pasta, dezodorantas</span></label></li><li><label><input type="checkbox" data-id="30f25225a0"><span>Asmeniniai vaistai, nuskausminamieji</span></label></li><li><label><input type="checkbox" data-id="197a834dc0"><span>Rankų dezinfekantas<span class="pk-note">mažas, ≤100 ml</span></span></label></li></ul><h4 class="pk-cat">Elektronika</h4><ul class="pk-items"><li><label><input type="checkbox" data-id="fb55e4fc8e"><span>Telefono įkrovikliai ir kabeliai<span class="pk-note">4 asmenims – dalintis gali vieną greitą kroviklį su keliais kabeliais</span></span></label></li><li><label><input type="checkbox" data-id="cdaa51db88"><span>Nešiojama baterija (power bank)<span class="pk-note">leidžiama tik rankiniame bagaže</span></span></label></li><li><label><input type="checkbox" data-id="25d6c5fbb3"><span>Elektros lizdų adapteris<span class="pk-note">nereikalingas – Danijoje tie patys C/F tipo lizdai kaip Lietuvoje</span></span></label></li></ul></div><script>
 (function(){
   var root=document.getElementById('packing-list'); if(!root) return;
   var prefix=root.getAttribute('data-key'), boxes=root.querySelectorAll('input[type=checkbox]');
@@ -832,34 +954,146 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </script><!-- PACKING_LIST:END -->
 </section>
 
-</div>
+<section id="food">
+  <h2>🍽️ Kur pavalgyti</h2>
 
-<div id="lightbox">
-  <button id="lightbox-close" aria-label="Uždaryti">&times;</button>
+  <h3>1 diena</h3>
+  <div class="card">
+    <p><strong>Café Wilder</strong> – Wildersgade 56. Bistro/kavinė, netoli Vor Frelsers Kirke. ~25 €/asm. Jaukus Christianshavn rajono bistro su prancūzišku-daniškos virtuvės meniu. <a href="https://www.google.com/maps/search/?api=1&amp;query=Caf%C3%A9%20Wilder%2C%20Wildersgade%2056%2C%201408%20K%C3%B8benhavn" target="_blank">📍 Google Maps</a></p>
+    <p><strong>Hallernes Smørrebrød</strong> – Frederiksborggade 21. Prekystalis Torvehallerne turguje. ~15 €/asm. Seniausias ir labiausiai vertinamas smørrebrød prekystalis mieste. <a href="https://www.google.com/maps/search/?api=1&amp;query=Hallernes%20Sm%C3%B8rrebr%C3%B8d%2C%20Frederiksborggade%2021%2C%201360%20K%C3%B8benhavn%20K" target="_blank">📍 Google Maps</a></p>
+    <p><strong>Palermo Pizzeria</strong> – Borgbjergsvej 11. Kaimynystės picerija prie apartamentų. ~15 €/asm. Pigi ir patogi vakarienė per kelias minutes pėsčiomis. <a href="https://www.google.com/maps/search/?api=1&amp;query=Palermo%20Pizzeria%2C%20Borgbjergsvej%2011%2C%202450%20K%C3%B8benhavn%20SV" target="_blank">📍 Google Maps</a></p>
+  </div>
+
+  <h3>2 diena</h3>
+  <div class="card">
+    <p><strong>Restaurant Schønnemann</strong> – Hauser Plads 16. Klasikinis smørrebrød restoranas nuo 1877 m., netoli Amalienborgo. ~30 €/asm. <a href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant%20Sch%C3%B8nnemann%2C%20Hauser%20Plads%2016%2C%201127%20K%C3%B8benhavn%20K" target="_blank">📍 Google Maps</a></p>
+    <p><strong>Reffen</strong> – Refshalevej 167A. Gatvės maisto turgus. ~18 €/asm. Didžiausias Šiaurės Europos gatvės maisto turgus prie vandens. <a href="https://www.google.com/maps/search/?api=1&amp;query=Reffen%2C%20Refshalevej%20167A%2C%201432%20K%C3%B8benhavn%20K" target="_blank">📍 Google Maps</a></p>
+  </div>
+
+  <h3>3 diena</h3>
+  <div class="card">
+    <p><strong>Café Glyptoteket</strong> – Dantes Plads 7. Muziejaus kavinė žiemos sode. ~20 €/asm. <a href="https://www.google.com/maps/search/?api=1&amp;query=Caf%C3%A9%20Glyptoteket%2C%20Dantes%20Plads%207%2C%201556%20K%C3%B8benhavn%20V" target="_blank">📍 Google Maps</a></p>
+    <p><strong>Field's maisto aikštelė</strong> – Arne Jacobsens Allé 12. Prekybos centro maisto aikštelė prieš koncertą. ~15 €/asm. <a href="https://www.google.com/maps/search/?api=1&amp;query=Field%27s%20maisto%20aik%C5%A1tel%C4%97%2C%20Arne%20Jacobsens%20All%C3%A9%2012%2C%202300%20K%C3%B8benhavn%20S" target="_blank">📍 Google Maps</a></p>
+  </div>
+
+  <h3>4 diena</h3>
+  <div class="card">
+    <p><strong>Sonny</strong> – Frederiksberg Allé 12. Kepyklos kavinė netoli Frederiksberg Have. ~10 €/asm. Dirba ir pirmadieniais nuo 8 val. <a href="https://www.google.com/maps/search/?api=1&amp;query=Sonny%2C%20Frederiksberg%20All%C3%A9%2012%2C%201820%20Frederiksberg%20C" target="_blank">📍 Google Maps</a></p>
+    <p><strong>Aamanns</strong> – oro uosto terminale. Smørrebrød restoranas prieš skrydį. ~20 €/asm. <a href="https://www.google.com/maps/search/?api=1&amp;query=Aamanns%2C%20Kopenhaga" target="_blank">📍 Google Maps</a></p>
+  </div>
+
+  <h3>🍸 Ypatingi barai</h3>
+  <div class="card">
+    <p><strong>Nimb Bar</strong> – Bernstorffsgade 5 (Tivoli parko viduryje, 3 diena). 1909 m. maurietiško stiliaus rūmų buvusi baliaus salė su krištolo sietynais. <a href="https://www.google.com/maps/search/?api=1&amp;query=Nimb%20Bar%2C%20Bernstorffsgade%205%2C%201577%20K%C3%B8benhavn%20V" target="_blank">📍 Google Maps</a></p>
+    <p><strong>Ruby</strong> – Nybrogade 10 (prie Christiansborgo, 3 diena). Vienas geriausiai pasaulyje vertinamų kokteilių barų, 1740 m. senamiesčio pirklio namuose. <a href="https://www.google.com/maps/search/?api=1&amp;query=Ruby%2C%20Nybrogade%2010%2C%201203%20K%C3%B8benhavn%20K" target="_blank">📍 Google Maps</a></p>
+  </div>
+
+  <h2 style="margin-top:2rem;">🥟 Ką paragauti</h2>
+  <div class="card dish-card">
+    <img src="images/sm-rrebr-d-ad36844c.jpg" alt="Smørrebrød">
+    <div class="dish-info">
+      <h3>Smørrebrød</h3>
+      <p>Atviras ruginės duonos sumuštinis su įvairiais apkepais – silke, krevetėmis, kiaušiniu, roastbeef ar kepenų paštetu. Danijos virtuvės simbolis.</p>
+      <p><strong>Kaina:</strong> 10–18 €</p>
+      <p><strong>Kur paragauti:</strong> Restaurant Schønnemann, Hallernes Smørrebrød, Aamanns</p>
+      <p class="photo-credit">Autorius: Kritzolina, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/wiki/File:Sm%C3%B8rrebr%C3%B8d_in_Copenhagen_01.jpg" target="_blank">šaltinis</a></p>
+    </div>
+  </div>
+  <div class="card dish-card">
+    <img src="images/stegt-fl-sk-su-petra-oli-pada-u-23f23eee.jpg" alt="Stegt flæsk">
+    <div class="dish-info">
+      <h3>Stegt flæsk su petražolių padažu</h3>
+      <p>Traškiai apkepintos kiaulienos lašinių riekelės su virtomis bulvėmis ir baltu petražolių padažu – vienas populiariausių Danijos nacionalinių patiekalų.</p>
+      <p><strong>Kaina:</strong> 15–25 €</p>
+      <p><strong>Kur paragauti:</strong> Restaurant Schønnemann</p>
+      <p class="photo-credit">Autorius: ChildofMidnight (en.wikipedia), CC BY 2.0, <a href="https://commons.wikimedia.org/wiki/File:Stegt_fl%C3%A6sk.jpg" target="_blank">šaltinis</a></p>
+    </div>
+  </div>
+  <div class="card dish-card">
+    <img src="images/frikadeliai-9e606cdd.jpg" alt="Frikadeliai">
+    <div class="dish-info">
+      <h3>Frikadeliai</h3>
+      <p>Kiaulienos ir jautienos faršo kotletėliai, kepti svieste, patiekiami su virtomis bulvėmis, padažu ir raudonaisiais kopūstais arba ant ruginės duonos riekelės.</p>
+      <p><strong>Kaina:</strong> 10–18 €</p>
+      <p><strong>Kur paragauti:</strong> Restaurant Schønnemann, Hallernes Smørrebrød</p>
+      <p class="photo-credit">Autorius: cyclonebill, CC BY-SA 2.0, <a href="https://commons.wikimedia.org/wiki/File:Flickr_-_cyclonebill_-_Frikadeller_med_ristet_rugbr%C3%B8d_og_cornichons.jpg" target="_blank">šaltinis</a></p>
+    </div>
+  </div>
+  <div class="card dish-card">
+    <img src="images/raudonasis-de-rainis-2791e27c.jpg" alt="Raudonasis dešrainis">
+    <div class="dish-info">
+      <h3>Raudonasis dešrainis</h3>
+      <p>Raudona rūkyta dešra skrudintoje bandelėje su garstyčiomis, kečupu, svogūnais ir marinuotais agurkais – klasikinis greitas daniškas užkandis, paplitęs nuo 1920-ųjų.</p>
+      <p><strong>Kaina:</strong> 5–9 €</p>
+      <p><strong>Kur paragauti:</strong> Reffen</p>
+      <p class="photo-credit">Autorius: Ian Watson, CC0, <a href="https://commons.wikimedia.org/wiki/File:P%C3%B8lsevogn_(hot_dog_stand)_in_Copenhagen,_1988.jpg" target="_blank">šaltinis</a></p>
+    </div>
+  </div>
+  <div class="card dish-card">
+    <img src="images/danieli-kas-keksiukas-c2d2dda0.jpg" alt="Danieliškas keksiukas">
+    <div class="dish-info">
+      <h3>Danieliškas keksiukas (wienerbrød)</h3>
+      <p>Sluoksniuota mielinė tešla su sviestu ir varškės, marcipano ar vaisių įdaru – tai, ką pasaulyje vadina „danish pastry".</p>
+      <p><strong>Kaina:</strong> 3–6 €</p>
+      <p><strong>Kur paragauti:</strong> Sonny</p>
+      <p class="photo-credit">Autorius: Peter Isotalo, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/wiki/File:Glazed_apple_Danish.jpg" target="_blank">šaltinis</a></p>
+    </div>
+  </div>
+  <div class="card dish-card">
+    <img src="images/obuolinukai-b7aa8791.jpg" alt="Obuolinukai">
+    <div class="dish-info">
+      <h3>Obuolinukai (æbleskiver)</h3>
+      <p>Apvalūs, blynams panašūs saldūs kukuliukai, kepami specialioje keptuvėje su duobutėmis, barstomi cukraus pudra ir patiekiami su uogiene – populiarus rudens skanėstas.</p>
+      <p><strong>Kaina:</strong> 5–9 €</p>
+      <p><strong>Kur paragauti:</strong> Sonny</p>
+      <p class="photo-credit">Autorius: JoachimK, Public domain, <a href="https://commons.wikimedia.org/wiki/File:Aebleskiver.jpg" target="_blank">šaltinis</a></p>
+    </div>
+  </div>
+  <div class="card dish-card">
+    <div class="dish-info">
+      <h3>Karštas vynas (gløgg)</h3>
+      <p>Šiltas prieskoniais pagardintas raudonas vynas su migdolais ir razinomis – tradicinis šiltas gėrimas šaltėjant orams, spalio pabaigoje jau pasirodantis kai kuriuose baruose ir turguose.</p>
+      <p><strong>Kaina:</strong> 5–8 €</p>
+      <p><strong>Kur paragauti:</strong> Reffen</p>
+    </div>
+  </div>
+</section>
+
+<section id="practical-card">
+  <h2>✈️ Grįžtamoji informacija</h2>
+  <div class="card practical-card">
+    <p><strong>Apartamentų atsiskaitymas:</strong> ne vėliau kaip 12:00, 4 diena (2026-10-26)</p>
+    <p><strong>Skrydis namo:</strong> CPH → KUN, išvykimas 15:15, atvykimas 17:45</p>
+    <p><strong>Kontaktai nenumatytiems atvejams:</strong> ______________ (įrašykite prieš kelionę)</p>
+  </div>
+</section>
+
+</main>
+
+<div id="lightbox-overlay">
   <img id="lightbox-img" src="" alt="">
 </div>
 
 <footer>
-  Sukurta kelionei į Kopenhagą · <!-- BUILD_TIME -->
+  Kopenhaga, 2026-10-23 – 2026-10-26 · <!-- BUILD_TIME -->
 </footer>
 
 <script>
-(function(){
-  var lb = document.getElementById('lightbox');
-  var lbImg = document.getElementById('lightbox-img');
-  document.addEventListener('click', function(e){
-    var t = e.target;
-    if(t && t.classList && t.classList.contains('spot-thumb')){
-      lbImg.src = t.src;
-      lbImg.alt = t.alt || '';
-      lb.classList.add('open');
-    }
+document.addEventListener('DOMContentLoaded', function () {
+  var overlay = document.getElementById('lightbox-overlay');
+  var lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.spot-thumb').forEach(function (img) {
+    img.addEventListener('click', function () {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      overlay.classList.add('open');
+    });
   });
-  function closeLb(){ lb.classList.remove('open'); lbImg.src=''; }
-  document.getElementById('lightbox-close').addEventListener('click', closeLb);
-  lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLb(); });
-})();
+  overlay.addEventListener('click', function () {
+    overlay.classList.remove('open');
+    lightboxImg.src = '';
+  });
+});
 </script>
 
 </body>
